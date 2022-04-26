@@ -22,6 +22,11 @@ namespace Codecool.CodecoolShop.Services
             return this.productCategoryDao.Get(categoryId);
         }
 
+        public IEnumerable<ProductCategory> GetAllProductCategories()
+        {
+            return this.productCategoryDao.GetAll();
+        }
+
         public IEnumerable<Product> GetProductsForCategory(int categoryId)
         {
             ProductCategory category = this.productCategoryDao.Get(categoryId);
@@ -41,6 +46,11 @@ namespace Codecool.CodecoolShop.Services
             ProductCategory category = this.productCategoryDao.Get(categoryId);
             Supplier supplier = this.supplierDao.Get(supplierId);
             return this.productDao.GetBy(category, supplier);
+        }
+
+        public IEnumerable<Supplier> GetAllSuppliers()
+        {
+            return supplierDao.GetAll();
         }
     }
 }

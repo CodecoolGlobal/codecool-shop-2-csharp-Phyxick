@@ -28,6 +28,8 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Index(string? categories, string? suppliers)
         {
+            ViewData["ProductCategories"] = ProductService.GetAllProductCategories();
+            ViewData["Suppliers"] = ProductService.GetAllSuppliers();
             return categories switch
             {
                 null when suppliers is null => View(ProductService.GetProductsForCategory(1).ToList()),
