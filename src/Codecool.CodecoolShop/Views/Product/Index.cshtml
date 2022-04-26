@@ -1,7 +1,8 @@
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
+@using System.Globalization
 @model List<Codecool.CodecoolShop.Models.Product>
 
 <div class="container">
@@ -21,12 +22,12 @@
                     <p class="card-text">@element.Description.</p>
                     <p class="card-text">Category: @element.ProductCategory.Department</p>
                     <p class="card-text">Supplier: @element.Supplier.Name</p>
-                    <p class="card-text text-center"><strong>Price: @element.DefaultPrice.ToString("C2")</strong></p>
+                    <p class="card-text text-center"><strong>Price: &#8367 @element.DefaultPrice.ToString()</strong></p>
                     <a href="" type="button" class="btn btn-primary" style="float: bottom">Add To Cart</a>
+                    <a asp-controller="Cart" asp-action="Buy" asp-route-id="@element.Id">Buy Now</a>
                 </div>
             </div>
+            <br/>
         </div>
     }
-
-
 </div>
