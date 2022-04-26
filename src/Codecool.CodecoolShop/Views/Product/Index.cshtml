@@ -23,6 +23,7 @@
                     <p class="card-text">Supplier: @element.Supplier.Name</p>
                     <p class="card-text text-center"><strong>Price: @element.DefaultPrice.ToString("C2")</strong></p>
                     <a href="" type="button" class="btn btn-primary" style="float: bottom">Add To Cart</a>
+                    <a asp-controller="Cart" asp-action="Buy" asp-route-id="@element.Id">Buy Now</a>
                 </div>
             </div>
         </div>
