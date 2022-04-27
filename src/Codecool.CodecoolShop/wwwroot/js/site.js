@@ -176,3 +176,13 @@ function getCountry() {
         });
 }
 getCountry();
+
+
+function SetBilling(checked) {
+    if (checked) {
+        document.getElementById('deliveryaddres').style.display = "none";
+    }
+    else {
+        document.getElementById('deliveryaddres').style.display = "block";
+    }
+}

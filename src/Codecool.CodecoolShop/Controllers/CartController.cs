@@ -125,6 +125,11 @@ namespace Codecool.CodecoolShop.Controllers
             }
             return -1;
         }
+        public IActionResult Checkout()
+        {
+
+            return View();
+        }
 
     }
 }
