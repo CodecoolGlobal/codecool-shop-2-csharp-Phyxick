@@ -31,9 +31,19 @@ namespace Codecool.CodecoolShop.Controllers
         [Route("cart")]
         public IActionResult Index()
         {
-            var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
-            ViewBag.cart = cart;
-            ViewBag.total = cart.Sum(item => item.Product.DefaultPrice * item.Quantity);
+            if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
+            {
+                List<Item> cart = new List<Item>();
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            }
+            else
+            {
+                var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+                ViewBag.cart = cart;
+                ViewBag.total = cart.Sum(item => item.Product.DefaultPrice * item.Quantity);
+            }
+
+
             return View();
         }
 
@@ -60,21 +70,51 @@ namespace Codecool.CodecoolShop.Controllers
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Product");
         }
+
+
+        [Route("add/{id}")]
+        public IActionResult Add(string id)
+        {
+
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            int index = isExist(id);
+            if (index != -1)
+            {
+                cart[index].Quantity++;
+            }
+            else
+            {
+                cart.Add(new Item { Product = ProductService.GetProductById(Int32.Parse(id)), Quantity = 1 });
+            }
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+
+            return RedirectToAction("Index", "Cart");
+        }
+
 
         [Route("remove/{id}")]
         public IActionResult Remove(string id)
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             int index = isExist(id);
-            cart.RemoveAt(index);
+            if (cart[index].Quantity > 1)
+            {
+                cart[index].Quantity--;
+            }
+            else
+            {
+                cart.RemoveAt(index);
+            }
+
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index");
         }
 
-        private int isExist(string id)
+        private int isExist(string idString)
         {
+            int id = Int32.Parse(idString);
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             for (int i = 0; i < cart.Count; i++)
             {

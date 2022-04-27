@@ -6,7 +6,8 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta name="viewport" content="width=device-width"/>
     <title>Index</title>
 </head>
 <body>
@@ -21,16 +22,33 @@
         <th>Quantity</th>
         <th>Sub Total</th>
     </tr>
-    @foreach (var element in ViewBag.cart)
+    @if (ViewBag.cart == null)
     {
         <tr>
-            <td><a asp-controller="Cart" asp-action="Remove" asp-route-id="@element.Product.Id">Remove</a></td>
-            <td class="card-title">@element.Product.Name</td>
-            <td><img src="/img/@(element.Product.Name).jpg" style="height: 50%; width: 50%; align-self: center; padding-top: 10px"></td>
-            <td class="card-text text-center"><strong>Price: @element.Product.DefaultPrice.ToString("C2")</strong></td>
-            <td>@element.Quantity</td>
-            <td>@(element.Product.DefaultPrice * element.Quantity)</td>
+            <td></td>
+            <td>YOUR CART IS EMPTY</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
+    }
+    else
+    {
+
+
+        @foreach (var element in ViewBag.cart)
+        {
+            <tr>
+                <td><a style="margin: auto; text-align: center; display: block" asp-controller="Cart" asp-action="Add" asp-route-id="@element.Product.Id" >&#9650;</a> 
+                    <br/><br/> <a style="margin: auto; text-align: center; display: block" asp-controller="Cart" asp-action="Remove" asp-route-id="@element.Product.Id">&#9660;</a></td>
+                <td class="card-title">@element.Product.Name</td>
+                <td><img src="/img/@(element.Product.Name).jpg" style="height: 50%; width: 50%; align-self: center; padding-top: 10px"></td>
+                <td class="card-text text-center"><strong>Price: &#8367 @element.Product.DefaultPrice.ToString()</strong></td>
+                <td>@element.Quantity </td>
+                <td>@(element.Product.DefaultPrice * element.Quantity)</td>
+            </tr>
+        }
     }
     <tr>
         <td align="right" colspan="6">Sum</td>
