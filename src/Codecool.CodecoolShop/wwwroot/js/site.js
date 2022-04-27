@@ -1,5 +1,25 @@
-﻿dropdownMenu('.category-select', 'Filter Categories');
+﻿updateLocalStorage();
+
+dropdownMenu('.category-select', 'Filter Categories');
 dropdownMenu('.supplier-select', 'Filter Suppliers');
+
+function updateLocalStorage() {
+    var boxes = document.querySelectorAll(".checkBox-category, .checkBox-supplier");
+    for (var i = 0; i < boxes.length; i++) {
+        var box = boxes[i];
+        if (box.hasAttribute("value")) {
+            setupBox(box);
+        }
+    }
+    function setupBox(box) {
+        var storageId = box.getAttribute("value");
+        var oldVal = localStorage.getItem(storageId);
+        box.checked = oldVal === "true" ? true : false;
+        box.addEventListener("change", function () {
+            localStorage.setItem(storageId, this.checked);
+        });
+    }
+};
 
 function dropdownMenu(dropdown, dropdownText) {
 
@@ -13,7 +33,7 @@ function dropdownMenu(dropdown, dropdownText) {
             this.$checkAll = this.$el.find('[data-toggle="check-all"]').first();
             this.$inputs = this.$el.find('[type="checkbox"]');
 
-            this.onCheckBox();
+            this.updateStatus();
 
             this.$label.on('click', function (e) {
                 e.preventDefault();
@@ -23,35 +43,57 @@ function dropdownMenu(dropdown, dropdownText) {
             this.$checkAll.on('click', function (e) {
                 e.preventDefault();
                 _this.onCheckAll();
+                _this.refresh();
             });
 
             this.$inputs.on('change', function (e) {
-                _this.onCheckBox();
+                _this.updateStatus();
+                _this.refresh();
             });
         };
 
-        CheckboxDropdown.prototype.onCheckBox = function () {
-            this.updateStatus();
+        CheckboxDropdown.prototype.refresh = function() {
+            var categoryList = Object.keys(localStorage)
+                .filter(key => localStorage[key] === "true" && key.includes("category-"));
+            var categoryString = categoryList.join(",");
+            categoryString = categoryString.replaceAll("category-", "");
+            var supplierList = Object.keys(localStorage)
+                .filter(key => localStorage[key] === "true" && key.includes("supplier-"));
+            var supplierString = supplierList.join(",");
+            supplierString = supplierString.replaceAll("supplier-", "");
+
+            if (categoryString.length > 0 && supplierString.length > 0) {
+                window.location.href = "https://localhost:44368/" +
+                    "Product?categories=" +
+                    categoryString +
+                    "&suppliers=" +
+                    supplierString;
+            }
+            if (categoryString.length > 0 && supplierString.length === 0) {
+                window.location.href = "https://localhost:44368/" + "Product?categories=" + categoryString;
+            }
+            if (categoryString.length === 0 && supplierString.length > 0) {
+                window.location.href = "https://localhost:44368/" + "Product?suppliers=" + supplierString;
+            }
+            if (categoryString.length === 0 && supplierString.length === 0) {
+                window.location.href = "https://localhost:44368/";
+            }
         };
 
-        CheckboxDropdown.prototype.updateStatus = function () {
+        CheckboxDropdown.prototype.updateStatus = function() {
             var checked = this.$el.find(':checked');
-
             this.areAllChecked = false;
             this.$checkAll.html('Check All');
 
             if (checked.length <= 0) {
                 this.$label.html(dropdownText);
-            }
-            else if (checked.length === 1) {
+            } else if (checked.length === 1) {
                 this.$label.html(checked.parent('label').text());
-            }
-            else if (checked.length === this.$inputs.length) {
+            } else if (checked.length === this.$inputs.length) {
                 this.$label.html('All Selected');
                 this.areAllChecked = true;
                 this.$checkAll.html('Uncheck All');
-            }
-            else {
+            } else {
                 this.$label.html(checked.length + ' Selected');
             }
         };
@@ -60,14 +102,15 @@ function dropdownMenu(dropdown, dropdownText) {
             if (!this.areAllChecked || checkAll) {
                 this.areAllChecked = true;
                 this.$checkAll.html('Uncheck All');
-                this.$inputs.prop('checked', true);
+                this.$inputs.prop("checked", true);
             }
             else {
                 this.areAllChecked = false;
                 this.$checkAll.html('Check All');
-                this.$inputs.prop('checked', false);
+                this.$inputs.prop("checked", false);
             }
 
+            this.$inputs.each(function () { localStorage.setItem($(this)[0].value, $(this)[0].checked); });
             this.updateStatus();
         };
 

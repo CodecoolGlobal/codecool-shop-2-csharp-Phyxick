@@ -1,12 +1,12 @@
 ﻿@{
-	IEnumerable<ProductCategory> productCategories = ViewData["ProductCategories"] as IEnumerable<ProductCategory>;
-	IEnumerable<Supplier> suppliers = ViewData["Suppliers"] as IEnumerable<Supplier>;
+    IEnumerable<ProductCategory> productCategories = ViewData["ProductCategories"] as IEnumerable<ProductCategory>;
+    IEnumerable<Supplier> suppliers = ViewData["Suppliers"] as IEnumerable<Supplier>;
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" http-equiv="content-type" content="text-html"/>
+    <meta charset="utf-8" http-equiv="content-type" content="text-html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Argonauts</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -43,10 +43,10 @@
                             </a>
                             @foreach (var category in productCategories)
                             {
-	                            <label class="dropdown-option">
-	                                <input type="checkbox" name="dropdown-group" value="Selection 1" />
-	                                @category.Name
-	                            </label>
+                                <label class="dropdown-option">
+                                    <input type="checkbox" name="dropdown-group" value="category-@category.Id" class="checkBox-category"/>
+                                    @category.Name
+                                </label>
                             }
                         </div>
                     </div>
@@ -58,19 +58,19 @@
                                 Check All
                             </a>
 
-	                        @foreach (var supplier in suppliers)
-	                        {
-		                        <label class="dropdown-option">
-			                        <input type="checkbox" name="dropdown-group" value="Selection 1" />
-			                        @supplier.Name
-		                        </label>
-	                        }
+                            @foreach (var supplier in suppliers)
+                            {
+                                <label class="dropdown-option">
+                                    <input type="checkbox" name="dropdown-group" value="supplier-@supplier.Id" class="checkBox-supplier"/>
+                                    @supplier.Name
+                                </label>
+                            }
                         </div>
                     </div>
 
                     <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Login</a>
 
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index"><img width="20px" src="/img/basket-shopping-solid.jpg"></img></a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Cart"><img width="20px" src="/img/basket-shopping-solid.jpg"></img></a>
                     <div id="google_translate_element"></div>
                 </div>
             </div>
