@@ -9,6 +9,7 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <meta name="viewport" content="width=device-width"/>
     <title>Index</title>
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
 
@@ -40,8 +41,8 @@
         @foreach (var element in ViewBag.cart)
         {
             <tr>
-                <td><a style="margin: auto; text-align: center; display: block" asp-controller="Cart" asp-action="Add" asp-route-id="@element.Product.Id" >&#9650;</a> 
-                    <br/><br/> <a style="margin: auto; text-align: center; display: block" asp-controller="Cart" asp-action="Remove" asp-route-id="@element.Product.Id">&#9660;</a></td>
+                <td><a class="arrow" style="margin: auto; text-align: center; display: block" asp-controller="Cart" asp-action="Add" asp-route-id="@element.Product.Id" >&#9650;</a> 
+                    <br/><br/> <a class="arrow" style="margin: auto; text-align: center; display: block" asp-controller="Cart" asp-action="Remove" asp-route-id="@element.Product.Id">&#9660;</a></td>
                 <td class="card-title">@element.Product.Name</td>
                 <td><img src="/img/@(element.Product.Name).jpg" style="height: 50%; width: 50%; align-self: center; padding-top: 10px"></td>
                 <td class="card-text text-center"><strong>Price: &#8367 @element.Product.DefaultPrice.ToString()</strong></td>
@@ -58,7 +59,8 @@
     </tr>
 </table>
 <br>
-<a asp-controller="Product" asp-action="Index">Continue Shopping</a>
+<a asp-controller="Product" asp-action="Index">Continue Shopping</a><br>
+<a asp-controller="Cart" asp-action="Checkout"> Checkout</a>
 
 </body>
 </html>

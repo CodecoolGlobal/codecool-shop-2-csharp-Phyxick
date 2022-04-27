@@ -40,7 +40,7 @@ function dropdownMenu(dropdown, dropdownText) {
                 _this.toggleOpen();
             });
 
-            this.$checkAll.on('click', function (e) {
+            this.$checkAll.on('click', function(e) {
                 e.preventDefault();
                 _this.onCheckAll();
                 _this.refresh();
@@ -145,11 +145,21 @@ let geolocation = document.querySelector("#geolocation");
 function getCountry() {
 
     fetch('https://api.geoapify.com/v1/ipinfo?apiKey=01bd1e62308b42d987a328181041412e', {
-            method: 'GET'
-        })
+        method: 'GET'
+    })
         .then(function (response) { return response.json(); })
         .then(function (json) {
             geolocation.innerHTML = "We deliver to: " + json.country.name;
         });
 }
 getCountry();
+
+
+function SetBilling(checked) {
+    if (checked) {
+        document.getElementById('deliveryaddres').style.display = "none";
+    }
+    else {
+        document.getElementById('deliveryaddres').style.display = "block";
+    }
+}
