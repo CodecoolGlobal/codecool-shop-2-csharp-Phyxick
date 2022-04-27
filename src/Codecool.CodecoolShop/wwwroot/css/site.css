@@ -152,3 +152,7 @@ a {
 #google_translate_element {
     margin-left: auto;
 }
+
+.arrow {
+    text-decoration: none;
+}
