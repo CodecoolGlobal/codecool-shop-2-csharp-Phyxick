@@ -10,13 +10,14 @@
     <meta name="viewport" content="width=device-width"/>
     <title>Index</title>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/FormCSS.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true" defer></script>
 </head>
 <body>
 <form method="post" action="@Url.Action("ValidateData", "Payment")">
-    <fieldset>
+    <fieldset class="form-style-1">
         <legend>Add Checkout</legend>
         <div>
             <label for="Name">Name:</label>
@@ -31,50 +32,50 @@
             <input type="text" name="Phone number" value="" />
         </div>
         <h3>Billing Address </h3>
+        <p id="shiptobilling" class="form-row">
+            Same as Shipping <input type="checkbox" onclick="SetBilling(this.checked);" /> 
+        </p>
         <div>
             <label for="Country">Country:</label>
-            <input type="text" name="Country" value="" required="required"/>
+            <input id="country" type="text" name="Country" value="" required="required"/>
             <div>
                 <label for="Zipcode">Zipcode:</label>
-                <input type="text" name="Zipcode" value="" required="required"/>
+                <input id="zipcode" type="text" name="Zipcode" value="" required="required"/>
             </div>
             <div>
                 <label for="City">City Name:</label>
-                <input type="text" name="City" value="" required="required"/>
+                <input id="city" type="text" name="City" value="" required="required"/>
             </div>
             <div>
                 <label for="Street">Street Name:</label>
-                <input type="text" name="Street" value="" required="required"/>
+                <input id="street" type="text" name="Street" value="" required="required"/>
             </div>
             <div>
                 <label for="House">House Number:</label>
-                <input type="text" name="House" value="" required="required"/>
+                <input id="house-number" type="text" name="House" value="" required="required"/>
             </div>
         </div>
-         <p id="shiptobilling" class="form-row">
-            Same as Shipping <input type="checkbox" onclick="SetBilling(this.checked);" /> 
-        </p>
-        <div id="deliveryaddres" style="display:block;">
+        <div id="deliveryaddres" style="display:block"; style="display:none";>
             <h3>Shipping  Address </h3>
             <div>
                 <label for="Country">Country:</label>
-                <input type="text" name="Country" value="" required="required"/>
+                <input id="deliver-country" type="text" name="Country" value="" required="required"/>
             </div>
             <div>
                 <label for="Zipcode">Zipcode:</label>
-                <input type="text" name="Zipcode" value="" required="required"/>
+                <input id="delivery-zipcode" type="text" name="Zipcode" value="" required="required"/>
             </div>
             <div>
                 <label for="City">City Name:</label>
-                <input type="text" name="City" value="" required="required"/>
+                <input id="deliver-city" type="text" name="City" value="" required="required"/>
             </div>
             <div>
                 <label for="Street">Street Name:</label>
-                <input type="text" name="Street" value="" required="required"/>
+                <input id="deliver-street" type="text" name="Street" value="" required="required"/>
             </div>
             <div>
                 <label for="House">House Number:</label>
-                <input type="text" name="House" value="" required="required"/>
+                <input id="deliver-house-number" type="text" name="House" value="" required="required"/>
             </div>
         </div>
         <div>
