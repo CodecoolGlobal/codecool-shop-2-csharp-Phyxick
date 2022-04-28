@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Daos.Implementations;
+using Codecool.CodecoolShop.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
@@ -85,6 +86,9 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Confirmation()
         {
             Log.CloseAndFlush();
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            ViewBag.cart = cart;
+            ViewBag.total = cart.Sum(item => item.Product.DefaultPrice * item.Quantity);
             return View();
         }
 
