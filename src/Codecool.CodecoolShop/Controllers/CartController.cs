@@ -10,6 +10,7 @@ using Codecool.CodecoolShop.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -127,7 +128,8 @@ namespace Codecool.CodecoolShop.Controllers
         }
         public IActionResult Checkout()
         {
-
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            _logger.LogInformation("Going to checkout With {@Cart}", cart);
             return View();
         }
 
