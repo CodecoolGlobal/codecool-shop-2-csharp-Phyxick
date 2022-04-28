@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Daos.Implementations;
+using Codecool.CodecoolShop.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
@@ -30,6 +31,11 @@ namespace Codecool.CodecoolShop.Controllers
         {
             ViewData["ProductCategories"] = ProductService.GetAllProductCategories();
             ViewData["Suppliers"] = ProductService.GetAllSuppliers();
+
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            if (cart != null)
+                ViewData["cartItemsTotal"] = cart.Sum(item => item.Quantity);
+
             return categories switch
             {
                 null when suppliers is null => View(ProductService.GetProductsForCategory(1).ToList()),
