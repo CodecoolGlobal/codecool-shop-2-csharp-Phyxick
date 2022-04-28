@@ -449,3 +449,5 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/visualstudio,jetbrains+all,visualstudiocode
+/src/Codecool.CodecoolShop/Logs/log-1173c5d4-13e4-46d8-8f1e-95f3aa462634-20220428.json
+/src/Codecool.CodecoolShop/Logs
