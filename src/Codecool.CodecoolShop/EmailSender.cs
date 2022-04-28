@@ -17,19 +17,25 @@ namespace Codecool.CodecoolShop
             smtpClient.EnableSsl = true;
             smtpClient.Credentials = credential;
 
-            string FilePath = @"wwwroot\templates\Confirmation.cshtml";
-            StreamReader str = new StreamReader(FilePath);
-            string MailText = str.ReadToEnd();
-            str.Close();
+            //string FilePath = @"Views\Payment\Confirmation.cshtml";
+            //StreamReader str = new StreamReader(FilePath);
+            //string MailText = str.ReadToEnd();
+            //str.Close();
 
             StringBuilder messageToBeSent = new StringBuilder();
-            messageToBeSent.Append("Dear " + name + ",\n\n");
-            messageToBeSent.Append(MailText);
+            messageToBeSent.Append("Dear " + name + "<br><br>");
+            messageToBeSent.Append("Thanks for ordering from Argonauts!<br>");
+            messageToBeSent.Append("You can review your order details at the below link:<br>");
+            messageToBeSent.Append("https://localhost:44368/Payment/Confirmation<br><br>");
+            messageToBeSent.Append("Please don't hesitate to contact us if you have any questions regarding your order.<br><br>");
+            messageToBeSent.Append("Have a nice a day and hope to see you again very soon!<br><br>");
+            messageToBeSent.Append("The Argonauts Team");
 
             MailMessage message = new MailMessage("argonauts-shop@outlook.com", email);
             message.Subject = "Order Confirmation";
-            message.Body = messageToBeSent.ToString();
             message.IsBodyHtml = true;
+            message.Body = messageToBeSent.ToString();
+
             smtpClient.Send(message);
         }
     }

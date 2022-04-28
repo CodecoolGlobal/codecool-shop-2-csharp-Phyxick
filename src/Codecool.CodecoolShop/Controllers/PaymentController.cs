@@ -75,8 +75,6 @@ namespace Codecool.CodecoolShop.Controllers
             {
                 string name = Request.Form["Name"];
                 string email = Request.Form["Email"];
-                
-
                 emailSender.SendConfirmationEmail(name, email);
                 return RedirectToAction("Confirmation");
             }
