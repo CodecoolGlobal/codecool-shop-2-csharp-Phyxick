@@ -71,7 +71,7 @@ namespace Codecool.CodecoolShop.Controllers
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
-            return RedirectToAction("Index", "Product");
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
 

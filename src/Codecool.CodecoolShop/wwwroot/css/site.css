@@ -12,10 +12,27 @@ a {
     color: #0366d6;
 }
 
-.btn-primary {
+.greek-motive {
+    background-image: url("/img/navbar-image.jpg");
+    min-width: 100%;
+    min-height: 20px;
+    background-size: contain;
+}
+
+.top-motive {
+    margin: 0 0 1rem;
+}
+
+.navbar {
+    padding: 0.5rem 1rem 0;
+    background-color: #d2b38b;
+}
+
+.btn-light {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #8f613e;
+    border: 1px solid #aa7552;
+    z-index: 1;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -63,14 +80,40 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+    background-color: rgb(252, 237, 219);
+    color: #303a7a !important;
+}
+
+.inner-card {
+    min-height: 320px;
+}
+
+.inner-card:before {
+    content: "";
+    background-image: url("/img/venus.jpg");
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.3;
+}
+
+.product-image {
+    height: 50%;
+    width: 50%;
+    align-self: center;
+    padding-top: 10px;
+    z-index: 1;
 }
 
 .footer {
-    position: absolute;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
+    line-height: 30px; /* Vertically center the text there */
+    background-color: #d2b38b;
 }
 
 @charset "UTF-8";
@@ -104,7 +147,7 @@ a {
         transition: transform 0.15s ease-in-out 0.15s;
         max-height: 66vh;
         overflow-y: auto;
-        background-color: azure;
+        background-color: rgb(253, 218, 174);
         z-index: 999;
     }
 
@@ -121,7 +164,7 @@ a {
         padding: 6px 12px;
         line-height: 1;
         cursor: pointer;
-        border: 1px solid rgb(58, 45, 231);
+        border: 1px solid #8f613e;
         border-radius: 25px;
     }
 
@@ -149,10 +192,21 @@ a {
         top: -1px;
         margin-right: 4px;
     }
+
 #google_translate_element {
     margin-left: auto;
 }
 
+.goog-te-combo {
+    background-color: rgb(252, 237, 219);
+    z-index: 999;
+    border-radius: 5px;
+}
+
 .arrow {
     text-decoration: none;
+}
+
+.text-dark {
+    color: #303a7a !important;
 }
