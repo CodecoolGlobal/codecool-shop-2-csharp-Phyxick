@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Events;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -128,8 +129,15 @@ namespace Codecool.CodecoolShop.Controllers
         }
         public IActionResult Checkout()
         {
+            var Id = Guid.NewGuid();
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .WriteTo.File($"Logs\\log-{Id}-.json", LogEventLevel.Information, rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
-            _logger.LogInformation("Going to checkout With {@Cart}", cart);
+            Log.Information("Going to checkout With {@Cart}", cart);
             return View();
         }
 

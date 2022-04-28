@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
+using Serilog;
 
 
 namespace Codecool.CodecoolShop.Controllers
@@ -67,6 +68,7 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Confirmation()
         {
+            Log.CloseAndFlush();
             return View();
         }
 

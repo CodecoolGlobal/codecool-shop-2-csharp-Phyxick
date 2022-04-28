@@ -15,26 +15,8 @@ namespace Codecool.CodecoolShop
     {
         public static void Main(string[] args)
         {
-            var Id = Guid.NewGuid();
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .MinimumLevel.Override("System", LogEventLevel.Warning)
-                .WriteTo.File($"Logs\\log-{Id}-.json", LogEventLevel.Information, rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+            CreateHostBuilder(args).Build().Run();
 
-            try
-            {
-                Log.Warning("Application Starting Up");
-                CreateHostBuilder(args).Build().Run();
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "the application failed to start correctly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
 
         }
 
