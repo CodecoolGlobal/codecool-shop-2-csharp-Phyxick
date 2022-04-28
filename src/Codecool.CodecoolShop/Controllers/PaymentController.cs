@@ -37,6 +37,20 @@ namespace Codecool.CodecoolShop.Controllers
             {
                 string name = Request.Form["Name"];
                 string email = Request.Form["Email"];
+                string phoneNum = Request.Form["Phone number"];
+                string country = Request.Form["Country"];
+                string zip = Request.Form["Zipcode"];
+                string city = Request.Form["City"];
+                string street = Request.Form["Street"];
+                string house = Request.Form["House"];
+                Log.Logger.Information($"Name: {name}");
+                Log.Logger.Information($"Email: {email}");
+                Log.Logger.Information($"Phone: {phoneNum}");
+                Log.Logger.Information($"Country: {country}");
+                Log.Logger.Information($"Zip: {zip}");
+                Log.Logger.Information($"City: {city}");
+                Log.Logger.Information($"Street: {street}");
+                Log.Logger.Information($"House: {house}");
                 return RedirectToAction("Index", new {name = name,  email = email});
 
             }
@@ -60,6 +74,8 @@ namespace Codecool.CodecoolShop.Controllers
             {
                 string name = Request.Form["Name"];
                 string email = Request.Form["Email"];
+                
+
                 emailSender.SendConfirmationEmail(name, email);
                 return RedirectToAction("Confirmation");
             }
