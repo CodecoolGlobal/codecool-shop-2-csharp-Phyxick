@@ -23,73 +23,76 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Product" asp-action="Index">Argonauts</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex">
-
-                    <div class="nav-link text-dark" id="geolocation">Country</div>
-                    <div class="dropdown" data-control="checkbox-dropdown">
-                        <label class="dropdown-label category-select">Select</label>
-
-                        <div class="dropdown-list">
-                            <a href="#" data-toggle="check-all" data-string="category-" class="dropdown-option">
-                                Check All
-                            </a>
-                            @foreach (var category in productCategories)
-                            {
-                                <label class="dropdown-option">
-                                    <input type="checkbox" name="dropdown-group" value="category-@category.Id" class="checkBox-category"/>
-                                    @category.Name
-                                </label>
-                            }
-                        </div>
-                    </div>
-                    <div class="dropdown" data-control="checkbox-dropdown">
-                        <label class="dropdown-label supplier-select">Select</label>
-
-                        <div class="dropdown-list">
-                            <a href="#" data-toggle="check-all" data-string="supplier-" class="dropdown-option">
-                                Check All
-                            </a>
-
-                            @foreach (var supplier in suppliers)
-                            {
-                                <label class="dropdown-option">
-                                    <input type="checkbox" name="dropdown-group" value="supplier-@supplier.Id" class="checkBox-supplier"/>
-                                    @supplier.Name
-                                </label>
-                            }
-                        </div>
-                    </div>
-
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Login</a>
-
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Cart"><img width="20px" src="/img/basket-shopping-solid.jpg"></img></a>
-                    <div id="google_translate_element"></div>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow">
         <div class="container">
-            &copy; 750 BC - 2022 AD - Argonauts - <a asp-area="" asp-controller="Product" asp-action="Privacy">Privacy</a>
+            <a class="navbar-brand" asp-area="" asp-controller="Product" asp-action="Index">Argonauts</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex">
+
+                <div class="nav-link text-dark" id="geolocation">Country</div>
+                <div class="dropdown" data-control="checkbox-dropdown">
+                    <label class="dropdown-label category-select">Select</label>
+
+                    <div class="dropdown-list">
+                        <a href="#" data-toggle="check-all" data-string="category-" class="dropdown-option">
+                            Check All
+                        </a>
+                        @foreach (var category in productCategories)
+                        {
+                            <label class="dropdown-option">
+                                <input type="checkbox" name="dropdown-group" value="category-@category.Id" class="checkBox-category"/>
+                                @category.Name
+                            </label>
+                        }
+                    </div>
+                </div>
+                <div class="dropdown" data-control="checkbox-dropdown">
+                    <label class="dropdown-label supplier-select">Select</label>
+
+                    <div class="dropdown-list">
+                        <a href="#" data-toggle="check-all" data-string="supplier-" class="dropdown-option">
+                            Check All
+                        </a>
+
+                        @foreach (var supplier in suppliers)
+                        {
+                            <label class="dropdown-option">
+                                <input type="checkbox" name="dropdown-group" value="supplier-@supplier.Id" class="checkBox-supplier"/>
+                                @supplier.Name
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Login</a>
+
+                <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index"><img width="20px" src="/img/basket-shopping-solid.jpg"></img></a>
+                <div id="google_translate_element"></div>
+            </div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true" defer></script>
-    @RenderSection("Scripts", required: false)
+    </nav>
+</header>
+<div class="greek-motive top-motive"></div>
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+<div class="greek-motive"></div>
+
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 750 BC - 2022 AD - Argonauts - <a asp-area="" asp-controller="Product" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true" defer></script>
+@RenderSection("Scripts", required: false)
 </body>
 </html>
