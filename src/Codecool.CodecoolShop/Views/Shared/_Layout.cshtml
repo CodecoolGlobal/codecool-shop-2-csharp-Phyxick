@@ -1,6 +1,9 @@
 ﻿@{
     IEnumerable<ProductCategory> productCategories = ViewData["ProductCategories"] as IEnumerable<ProductCategory>;
     IEnumerable<Supplier> suppliers = ViewData["Suppliers"] as IEnumerable<Supplier>;
+    int? cartItems = ViewData["cartItemsTotal"] as int?;
+    if (cartItems == null)
+        cartItems = 0;
 }
 
 <!DOCTYPE html>
@@ -11,15 +14,11 @@
     <title>@ViewData["Title"] - Argonauts</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos" crossorigin="anonymous">
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
         }
     </script>
-
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
@@ -70,7 +69,7 @@
 
                 <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Login</a>
 
-                <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index"><img width="20px" src="/img/basket-shopping-solid.jpg"></img></a>
+                <a class="nav-link text-dark fa-solid fa-sailboat" asp-area="" asp-controller="Cart" asp-action="Index">καλάθι &#129530; (@cartItems)</a>
                 <div id="google_translate_element"></div>
             </div>
         </div>
