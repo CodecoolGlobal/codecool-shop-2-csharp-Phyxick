@@ -10,13 +10,14 @@
     <meta name="viewport" content="width=device-width"/>
     <title>Index</title>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/FormCSS.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true" defer></script>
 </head>
 <body>
 <form method="post" action="@Url.Action("ValidatePayment", "Payment")">
-    <fieldset>
+    <fieldset class="form-style-1">
         <legend>Payment</legend>
         <div>
             <label for="card-name">Card Holder Name:</label>
@@ -36,14 +37,14 @@
         </div>
         <div hidden="true">
             <label for="Email">Email:</label>
-            <input type="text" name="Email" value="@ViewData["email"]" />
+            <input class="field-long" type="text" name="Email" value="@ViewData["email"]" />
         </div>
         <div hidden="true">
             <label for="Name">Name:</label>
             <input type="text" name="Name" value="@ViewData["name"]" />
         </div>
+        <input type="submit" value="Submit" class="submit" />
     </fieldset>
-    <input type="submit" value="Submit" class="submit" />
 </form>
 </body>
 </html>
