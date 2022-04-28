@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8" http-equiv="content-type" content="text-html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Argonauts</title>
+    <title>Argonauts - @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script type="text/javascript">
@@ -85,7 +85,7 @@
 
 <footer class="border-top footer text-muted">
     <div class="container">
-        &copy; 750 BC - 2022 AD - Argonauts - <a asp-area="" asp-controller="Product" asp-action="Privacy">Privacy</a>
+        &copy; 750 BC - 2022 AD - Argonauts - @DateTime.Now.ToString("dd'-'MM'-'yyyy' 'HH':'mm") <a asp-area="" asp-controller="Product" asp-action="Privacy">Privacy</a>
     </div>
 </footer>
 
