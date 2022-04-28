@@ -158,8 +158,22 @@ getCountry();
 function SetBilling(checked) {
     if (checked) {
         document.getElementById('deliveryaddres').style.display = "none";
+        $('#country').bind('keypress blur', function () { $('#deliver-country').val($(this).val()); });
+        $('#zipcode').bind('keypress blur', function () { $('#delivery-zipcode').val($(this).val()); });
+        $('#city').bind('keypress blur', function () { $('#deliver-city').val($(this).val()); });
+        $('#street').bind('keypress blur', function () { $('#deliver-street').val($(this).val()); });
+        $('#house-number').bind('keypress blur', function () { $('#deliver-house-number').val($(this).val()); });
+        
+
+
     }
     else {
         document.getElementById('deliveryaddres').style.display = "block";
+        document.getElementById('delivery-country').value = '';
+        document.getElementById('delivery-zipcode').value = '';
+        document.getElementById('delivery-city').value = '';
+        document.getElementById('delivery-street').value = '';
+        document.getElementById('delivery-house').value = '';
+
     }
 }
