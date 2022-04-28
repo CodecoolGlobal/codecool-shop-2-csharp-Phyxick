@@ -78,10 +78,14 @@ namespace Codecool.CodecoolShop
             productCategoryDataStore.Add(tablet);
             productCategoryDataStore.Add(phone);
             productCategoryDataStore.Add(laptop);
-            productDataStore.Add(new Product { Name = "Amazon Fire", DefaultPrice = 49.9m, Currency = "USD", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = tablet, Supplier = amazon });
-            productDataStore.Add(new Product { Name = "Lenovo IdeaPad Miix 700", DefaultPrice = 479.0m, Currency = "USD", Description = "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", ProductCategory = tablet, Supplier = lenovo });
-            productDataStore.Add(new Product { Name = "Amazon Fire HD 8", DefaultPrice = 89.0m, Currency = "USD", Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", ProductCategory = tablet, Supplier = amazon });
-            productDataStore.Add(new Product { Name = "Amazon Fire HD 8", DefaultPrice = 89.0m, Currency = "USD", Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", ProductCategory = phone, Supplier = amazon });
+            productDataStore.Add(new Product { Name = "Amazon Fire", DefaultPrice = 49.9m, Image = "Amazon Fire.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = tablet, Supplier = amazon });
+            productDataStore.Add(new Product { Name = "Lenovo IdeaPad Miix 700", DefaultPrice = 479.0m, Image = "Lenovo IdeaPad Miix 700.jpg", Description = "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", ProductCategory = tablet, Supplier = lenovo });
+            productDataStore.Add(new Product { Name = "Persian Ship", DefaultPrice = 89.0m, Image = "ship-persian.png", Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", ProductCategory = tablet, Supplier = amazon });
+            productDataStore.Add(new Product { Name = "Metallic Chakram", DefaultPrice = 89.0m, Image = "chakram-metallic.png", Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", ProductCategory = phone, Supplier = amazon });
+            productDataStore.Add(new Product { Name = "Amazon Fire", DefaultPrice = 49.9m, Image = "Amazon Fire.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = tablet, Supplier = amazon });
+            productDataStore.Add(new Product { Name = "Lenovo IdeaPad Miix 700", DefaultPrice = 479.0m, Image = "Lenovo IdeaPad Miix 700.jpg", Description = "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", ProductCategory = tablet, Supplier = lenovo });
+            productDataStore.Add(new Product { Name = "Persian Ship", DefaultPrice = 89.0m, Image = "ship-persian.png", Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", ProductCategory = tablet, Supplier = amazon });
+            productDataStore.Add(new Product { Name = "Metallic Chakram", DefaultPrice = 89.0m, Image = "chakram-metallic.png", Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", ProductCategory = phone, Supplier = amazon });
         }
     }
 }
