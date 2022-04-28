@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     background-color: #d2b38b;
-    height: 100vh;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
