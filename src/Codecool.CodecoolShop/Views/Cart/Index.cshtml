@@ -1,0 +1,70 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="~/css/CartCSS.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet">
+</head>
+<body>
+   <div class="CartContainer">
+   	   <div class="Header">
+   	   	<h2 class="Heading">Shopping Cart</h2>
+       </div>
+       @if (ViewBag.cart == null)
+       {
+           <div class="Cart-Items">
+               <div class="image-box">
+               </div>
+               <div class="about">
+                   <h1 class="title">Title</h1>
+                   <h3 class="subtitle">Supplier</h3>
+               </div>
+               <div class="counter">
+                   <div class="btn">+</div>
+                   <div class="count">0</div>
+                   <div class="btn">-</div>
+               </div>
+               <div class="prices">
+                   <div class="amount">$0</div>
+               </div>
+           </div>
+       }
+       else
+       {
+           @foreach (var element in ViewBag.cart)
+           {
+               <div class="Cart-Items pad">
+                   <div class="image-box">
+                       <img src="/img/@(element.Product.Image)" style="height: 100%; width: 100%; align-self: center;" />
+                   </div>
+                   <div class="about">
+                       <h4 class="title">@element.Product.Name</h4>
+                   </div>
+                   <div class="counter">
+                       <div class="btn arrow" ><a asp-controller="Cart" asp-action="Add" asp-route-id="@element.Product.Id">&#9650;</a></div>
+                       <div class="count">@element.Quantity</div>
+                       <div class="btn arrow"><a asp-controller="Cart" asp-action="Remove" asp-route-id="@element.Product.Id">&#9660;</a></div>
+                   </div>
+                   <div class="prices">
+                       <div class="amount">₯ @element.Product.DefaultPrice.ToString()</div>
+                   </div>
+               </div>
+           }
+       }
+       <hr>
+       <div class="checkout">
+           <div class="total">
+               <div class="total-amount">Total: ₯ @ViewBag.total</div>
+           </div>
+           <a asp-controller="Cart" asp-action="Checkout"><button class="button">Checkout</button></a>
+           <a asp-controller="Product" asp-action="Index"><button id="continue-shopping" class="button">Continue Shopping</button></a>
+       </div>
+       
+   </div>
+</body>
+</html>

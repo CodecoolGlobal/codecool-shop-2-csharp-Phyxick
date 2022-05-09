@@ -1,0 +1,34 @@
+﻿
+@{
+    Layout = null;
+}
+<head>
+    <title>Index</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="~/css/CartCSS.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet">
+</head>
+<div class="CartContainer">
+    <div class="Header">
+        <h2 class="Heading">HURRRAY YOU GIVAD US DRACHMA FELLLOW FIGHTER</h2>
+    </div>
+    @foreach (var element in ViewData["cart"] as List<Item>)
+    {
+        <div class="Cart-Items pad">
+            <div class="image-box">
+                <img src="/img/@(element.Product.Image)" style="height: 100%; align-self: center;"/>
+            </div>
+            <div class="about">
+                <h4 class="title">@element.Product.Name</h4>
+            </div>
+            <div class="count">@element.Quantity</div>
+            <div class="prices">
+                <div class="amount">₯ @element.Product.DefaultPrice.ToString()</div>
+            </div>
+        </div>
+    }
+    <hr>
+    <div class="total">
+        <div class="total-amount">Total: ₯ @ViewBag.total</div>
+    </div>
+</div>
