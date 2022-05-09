@@ -85,7 +85,7 @@ namespace Codecool.CodecoolShop
             ProductCategory shield = new ProductCategory {Name = "Shield", Department = "Armour", Description = "Something to protect you against your foes." };
             ProductCategory sword = new ProductCategory {Name = "Sword", Department = "Weapon", Description = "A weapon for a real man." };
             ProductCategory nunchaku = new ProductCategory {Name = "Nunchaku", Department = "Weapon", Description = "You don't want to be hit by this." };
-            ProductCategory ship = new ProductCategory {Name = "Ship", Department = "Weapon", Description = "A first class method of transportation" };
+            ProductCategory ship = new ProductCategory {Name = "Ship", Department = "Vehicle", Description = "A first class method of transportation" };
             ProductCategory spear = new ProductCategory {Name = "Spear", Department = "Weapon", Description = "If you want to reach far, but stay protected at the same time." };
             ProductCategory helmet = new ProductCategory {Name = "Helmet", Department = "Armour", Description = "For your fine head." };
             ProductCategory mace = new ProductCategory {Name = "Mace", Department = "Weapon", Description = "Weapon for a tough guy." };
@@ -93,7 +93,7 @@ namespace Codecool.CodecoolShop
             ProductCategory armour = new ProductCategory {Name = "Armour", Department = "Armour", Description = "A fine piece of body wear to protect from all your foes." };
             ProductCategory sandal = new ProductCategory {Name = "Sandal", Department = "Footwear", Description = "Great footwear for even the longest fights." };
             ProductCategory other = new ProductCategory {Name = "Various items", Department = "Other", Description = "Various items." };
-            ProductCategory trident = new ProductCategory {Name = "Trident", Department = "Weapon", Description = "A weapon for a God." };
+            ProductCategory trident = new ProductCategory {Name = "Trident", Department = "Weapon", Description = "A weapon fit for a God." };
             productCategoryDataStore.Add(chakram);
             productCategoryDataStore.Add(crossbow);
             productCategoryDataStore.Add(dagger);
@@ -114,7 +114,7 @@ namespace Codecool.CodecoolShop
             productDataStore.Add(new Product { Name = "LMBTQ Chakram", DefaultPrice = 49.9m, Image = "chakram-lmbtq.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = chakram, Supplier = amazon });
             productDataStore.Add(new Product { Name = "Crossbow", DefaultPrice = 49.9m, Image = "crossbow1.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = crossbow, Supplier = amazon });
             productDataStore.Add(new Product { Name = "Crossbow", DefaultPrice = 49.9m, Image = "crossbow2.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = crossbow, Supplier = greekHandMadeCo });
-            productDataStore.Add(new Product { Name = "Crossbow", DefaultPrice = 49.9m, Image = "crossbow2.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = crossbow, Supplier = amazon });
+            productDataStore.Add(new Product { Name = "Crossbow", DefaultPrice = 49.9m, Image = "crossbow3.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = crossbow, Supplier = amazon });
             productDataStore.Add(new Product { Name = "Dagger", DefaultPrice = 49.9m, Image = "dagger-sword.png", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = dagger, Supplier = greekHandMadeCo });
             productDataStore.Add(new Product { Name = "Gastraphetes", DefaultPrice = 49.9m, Image = "gastraphetes.png", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = crossbow, Supplier = amazon });
             productDataStore.Add(new Product { Name = "Gastraphetes", DefaultPrice = 49.9m, Image = "gastraphetes2.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = crossbow, Supplier = amazon });
@@ -173,7 +173,7 @@ namespace Codecool.CodecoolShop
             productDataStore.Add(new Product { Name = "Armour", DefaultPrice = 49.9m, Image = "armour4.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = armour, Supplier = amazon });
             productDataStore.Add(new Product { Name = "Xena Fancy Dress", DefaultPrice = 49.9m, Image = "xena-fancy-dress.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = other, Supplier = fancyDressCentral });
             productDataStore.Add(new Product { Name = "Roman Fancy Dress", DefaultPrice = 49.9m, Image = "roman-fancy-dress.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = other, Supplier = fancyDressCentral });
-            productDataStore.Add(new Product { Name = "Grappa 1l", DefaultPrice = 49.9m, Image = "grappa.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = other, Supplier = amazon });
+            productDataStore.Add(new Product { Name = "Ouzo 1l", DefaultPrice = 49.9m, Image = "ouzo.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = other, Supplier = amazon });
             productDataStore.Add(new Product { Name = "Vase", DefaultPrice = 49.9m, Image = "vase.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = other, Supplier = amazon });
             productDataStore.Add(new Product { Name = "Ancient Greek Phone", DefaultPrice = 49.9m, Image = "ancient-greek-phone.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = other, Supplier = amazon });
             productDataStore.Add(new Product { Name = "Trident", DefaultPrice = 49.9m, Image = "trident.jpg", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = trident, Supplier = amazon });
