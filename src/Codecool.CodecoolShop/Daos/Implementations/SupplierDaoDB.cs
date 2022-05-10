@@ -8,8 +8,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class SupplierDaoDB : DbConnectionHelper<Supplier>, ISupplierDao
     {
-        private List<Supplier> _data = new List<Supplier>();
-        private static SupplierDaoDB instance = null;
+        private static SupplierDaoDB _instance = null;
 
         private SupplierDaoDB()
         {
@@ -17,35 +16,40 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public static SupplierDaoDB GetInstance()
         {
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = new SupplierDaoDB();
+                _instance = new SupplierDaoDB();
             }
 
-            return instance;
+            return _instance;
         }
 
         public void Add(Supplier item)
         {
-            item.Id = _data.Count + 1;
-            _data.Add(item);
+
+            string query = $"INSERT INTO Supplier" +
+                           $"VALUES ({item.Name}, {item.Description});";
+            Write(query);
         }
 
         public void Remove(int id)
         {
-            _data.Remove(this.Get(id));
+            string query = $"DELETE FROM Supplier" +
+                           $"WHERE Id = {id};";
+            Write(query);
         }
 
         public Supplier Get(int id)
         {
             string query = $"SELECT * FROM Supplier" +
-                           $"WHERE id = {id}";
+                           $"WHERE Id = {id};";
             return Read(query).First();
         }
 
         public IEnumerable<Supplier> GetAll()
         {
-            return _data;
+            string query = $"SELECT * FROM Supplier;";
+            return Read(query);
         }
 
         protected override List<Supplier> Read(string queryString)
