@@ -1,37 +1,4 @@
-﻿ALTER TABLE OrderHistory
-	DROP CONSTRAINT IF EXISTS FK_OrderHistory_User_id;
-
-ALTER TABLE CartHistory
-	DROP CONSTRAINT IF EXISTS FK_CartHistory_Product_id;
-
-ALTER TABLE CartHistory
-	DROP CONSTRAINT IF EXISTS FK_CartHistory_Order_history_id;
-
-ALTER TABLE Product
-	DROP CONSTRAINT IF EXISTS FK_Product_ProductCategory;
-
-ALTER TABLE Product
-	DROP CONSTRAINT IF EXISTS FK_Product_Supplier;
-
-ALTER TABLE Users
-	DROP CONSTRAINT IF EXISTS FK_Users_Billing_address;
-
-ALTER TABLE Users
-	DROP CONSTRAINT IF EXISTS FK_Users_Shipping_address;
-
-ALTER TABLE Users
-	DROP CONSTRAINT IF EXISTS FK_Users_Shopping_cart;
-
-ALTER TABLE Users
-	DROP CONSTRAINT IF EXISTS FK_Users_Order_history;
-
-ALTER TABLE BillingAddress
-	DROP CONSTRAINT IF EXISTS FK_BillingAddress_User_id;
-
-ALTER TABLE ShippingAddress
-	DROP CONSTRAINT IF EXISTS FK_ShippingAddress_User_id;
-
-DROP TABLE IF EXISTS Product;
+﻿DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS ProductCategory;
 DROP TABLE IF EXISTS Supplier;
 DROP TABLE IF EXISTS Users;
@@ -124,6 +91,39 @@ CREATE TABLE CartHistory
 	Product_id INT,
 	Order_history_id INT
 );
+
+ALTER TABLE OrderHistory
+	DROP CONSTRAINT IF EXISTS FK_OrderHistory_User_id;
+
+ALTER TABLE CartHistory
+	DROP CONSTRAINT IF EXISTS FK_CartHistory_Product_id;
+
+ALTER TABLE CartHistory
+	DROP CONSTRAINT IF EXISTS FK_CartHistory_Order_history_id;
+
+ALTER TABLE Product
+	DROP CONSTRAINT IF EXISTS FK_Product_ProductCategory;
+
+ALTER TABLE Product
+	DROP CONSTRAINT IF EXISTS FK_Product_Supplier;
+
+ALTER TABLE Users
+	DROP CONSTRAINT IF EXISTS FK_Users_Billing_address;
+
+ALTER TABLE Users
+	DROP CONSTRAINT IF EXISTS FK_Users_Shipping_address;
+
+ALTER TABLE Users
+	DROP CONSTRAINT IF EXISTS FK_Users_Shopping_cart;
+
+ALTER TABLE Users
+	DROP CONSTRAINT IF EXISTS FK_Users_Order_history;
+
+ALTER TABLE BillingAddress
+	DROP CONSTRAINT IF EXISTS FK_BillingAddress_User_id;
+
+ALTER TABLE ShippingAddress
+	DROP CONSTRAINT IF EXISTS FK_ShippingAddress_User_id;
 
 ALTER TABLE OrderHistory
 	ADD CONSTRAINT FK_OrderHistory_User_id FOREIGN KEY (User_id)
@@ -223,7 +223,7 @@ INSERT INTO Product VALUES ('Nunchaku', 229.99, 'nunchaku2.png', 'Nunchaku from 
 INSERT INTO Product VALUES ('Ship', 39990.00, 'ship1.png', 'The biggest ship you can find around Greece', 7, 2);
 INSERT INTO Product VALUES ('Ship', 26660.66, 'ship2.png', 'You need to get anywhere? This is your Nr.1 choice', 7, 2);
 INSERT INTO Product VALUES ('Persian Ship', 34990.00, 'ship-persian.png', 'Fine piece of art directly from Persia', 7, 1);
-INSERT INTO Product VALUES ('Spartan Army Bowie Knife', 210.00, 'xispartan-army-bowie-knife.jpg', 'Army Knife fit for a Spartan', 3, 2);
+INSERT INTO Product VALUES ('Spartan Army Bowie Knife', 210.00, 'spartan-army-bowie-knife.jpg', 'Army Knife fit for a Spartan', 3, 2);
 INSERT INTO Product VALUES ('Xiphos', 259.88, 'xiphos.png', 'If your wife likes shiny things, this is the perfect gift for her... and she can even protect herself with it', 3, 2);
 INSERT INTO Product VALUES ('Spartan Army Spear', 399.99, 'spartan-army-spear.jpg', 'Army Spear fit for a Spartan', 8, 2);
 INSERT INTO Product VALUES ('Red Hoplon', 259.99, 'spartan-hoplon.png', 'Hoplon fit for a Spartan', 4, 2);
@@ -264,9 +264,9 @@ INSERT INTO Product VALUES ('Complete Armour', 559.99, 'complete-armour4.jpg', '
 INSERT INTO Product VALUES ('Helmet', 173.29, 'helmet.jpg', 'Stylish, but protective at the same time', 9, 2);
 INSERT INTO Product VALUES ('Sandal', 198.88, 'sandal.jpg', 'Dress like the god Hermes', 13, 1);
 INSERT INTO Product VALUES ('Sandal', 210.00, 'sandal2.jpg', 'Stylish everyday, but still perfect for those fights', 13, 1);
-INSERT INTO Product VALUES ('Armour', 449.99, 'armour2.jpg"', 'A simple looking armour, but perfect for your personal protection', 12, 4);
-INSERT INTO Product VALUES ('Armour', 459.99, 'armour3.jpg"', 'Don''t have big muscles? When you wear this, nobody will care', 12, 4);
-INSERT INTO Product VALUES ('Armour', 459.99, 'armour4.jpg"', 'A golden armour to show off your style', 12, 2);
+INSERT INTO Product VALUES ('Armour', 449.99, 'armour2.jpg', 'A simple looking armour, but perfect for your personal protection', 12, 4);
+INSERT INTO Product VALUES ('Armour', 459.99, 'armour3.jpg', 'Don''t have big muscles? When you wear this, nobody will care', 12, 4);
+INSERT INTO Product VALUES ('Armour', 459.99, 'armour4.jpg', 'A golden armour to show off your style', 12, 2);
 INSERT INTO Product VALUES ('Xena Fancy Dress', 399.99, 'xena-fancy-dress.jpg', 'If you want to look like the Warrior Princess, you won''t find a better outfit than this', 14, 3);
 INSERT INTO Product VALUES ('Roman Fancy Dress', 349.99, 'roman-fancy-dress.jpg', 'Dress like a real Roman to infiltrate their troops without being discovered', 14, 3);
 INSERT INTO Product VALUES ('Ouzo 1l', 299.99, 'ouzo.jpg', 'For those nights after your victories', 14, 1);
