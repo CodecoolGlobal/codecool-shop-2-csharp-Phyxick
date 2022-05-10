@@ -1,6 +1,45 @@
-﻿DROP TABLE IF EXISTS Product;
+﻿ALTER TABLE OrderHistory
+	DROP CONSTRAINT IF EXISTS FK_OrderHistory_User_id;
+
+ALTER TABLE CartHistory
+	DROP CONSTRAINT IF EXISTS FK_CartHistory_Product_id;
+
+ALTER TABLE CartHistory
+	DROP CONSTRAINT IF EXISTS FK_CartHistory_Order_history_id;
+
+ALTER TABLE Product
+	DROP CONSTRAINT IF EXISTS FK_Product_ProductCategory;
+
+ALTER TABLE Product
+	DROP CONSTRAINT IF EXISTS FK_Product_Supplier;
+
+ALTER TABLE Users
+	DROP CONSTRAINT IF EXISTS FK_Users_Billing_address;
+
+ALTER TABLE Users
+	DROP CONSTRAINT IF EXISTS FK_Users_Shipping_address;
+
+ALTER TABLE Users
+	DROP CONSTRAINT IF EXISTS FK_Users_Shopping_cart;
+
+ALTER TABLE Users
+	DROP CONSTRAINT IF EXISTS FK_Users_Order_history;
+
+ALTER TABLE BillingAddress
+	DROP CONSTRAINT IF EXISTS FK_BillingAddress_User_id;
+
+ALTER TABLE ShippingAddress
+	DROP CONSTRAINT IF EXISTS FK_ShippingAddress_User_id;
+
+DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS ProductCategory;
 DROP TABLE IF EXISTS Supplier;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS BillingAddress;
+DROP TABLE IF EXISTS ShippingAddress;
+DROP TABLE IF EXISTS ShoppingCart;
+DROP TABLE IF EXISTS OrderHistory;
+DROP TABLE IF EXISTS CartHistory;
 
 CREATE TABLE Product
 (
@@ -28,6 +67,85 @@ CREATE TABLE Supplier
 	Description TEXT
 );
 
+CREATE TABLE Users
+(
+	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	Username TEXT NOT NULL,
+	Password TEXT NOT NULL,
+	Name TEXT,
+	Email TEXT,
+	Phone TEXT,
+	Billing_address_id INT,
+	Shipping_address_id INT,
+	Shopping_cart_id INT,
+	Order_history_id INT
+);
+
+CREATE TABLE BillingAddress
+(
+	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	Country TEXT,
+	Zipcode TEXT,
+	City TEXT,
+	Street TEXT,
+	House_number INT,
+	User_id INT
+);
+
+CREATE TABLE ShippingAddress
+(
+	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	Country TEXT,
+	Zipcode TEXT,
+	City TEXT,
+	Street TEXT,
+	House_number INT,
+	User_id INT
+);
+
+CREATE TABLE ShoppingCart
+(
+	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	Items TEXT
+);
+
+CREATE TABLE OrderHistory
+(
+	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	Order_date DateTime,
+	Order_status TEXT,
+	Total_price Decimal(20,0),
+	User_id INT
+);
+
+CREATE TABLE CartHistory
+(
+	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	Product_id INT,
+	Order_history_id INT
+);
+
+ALTER TABLE OrderHistory
+	ADD CONSTRAINT FK_OrderHistory_User_id FOREIGN KEY (User_id)
+	REFERENCES Users (Id)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
+;
+
+ALTER TABLE CartHistory
+	ADD CONSTRAINT FK_CartHistory_Product_id FOREIGN KEY (Product_id)
+	REFERENCES Product (Id)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
+;
+
+ALTER TABLE CartHistory
+	ADD CONSTRAINT FK_CartHistory_Order_history_id FOREIGN KEY (Order_history_id)
+	REFERENCES OrderHistory (Id)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
+;
+
 ALTER TABLE Product
 	ADD CONSTRAINT FK_Product_ProductCategory FOREIGN KEY (Product_category_id)
 	REFERENCES ProductCategory (Id)
@@ -42,10 +160,34 @@ ALTER TABLE Product
     ON UPDATE CASCADE
 ;
 
+ALTER TABLE Users
+	ADD CONSTRAINT FK_Users_Billing_address FOREIGN KEY (Billing_address_id)
+	REFERENCES BillingAddress (Id)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
+;
+
+ALTER TABLE Users
+	ADD CONSTRAINT FK_Users_Shipping_address FOREIGN KEY (Shipping_address_id)
+	REFERENCES ShippingAddress (Id)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
+;
+
+ALTER TABLE Users
+	ADD CONSTRAINT FK_Users_Shopping_cart FOREIGN KEY (Shopping_cart_id)
+	REFERENCES ShoppingCart (Id)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
+;
+
+
+
 INSERT INTO Supplier VALUES ('Amazon', 'Digital content and services');
 INSERT INTO Supplier VALUES ('Greek Hand Made Company', 'Hand crafted items directly from Greece');
 INSERT INTO Supplier VALUES ('Fancy Dress Central', 'Fancy dresses for all your parties');
 INSERT INTO Supplier VALUES ('Ancient Times GmbH', 'Finest weapons from Alemania');
+
 INSERT INTO ProductCategory VALUES ('Chakram', 'Weapon', 'Round shaped weapon that works like a frizby');
 INSERT INTO ProductCategory VALUES ('Crossbow', 'Weapon', 'A bow for people who like to hold heavy weapons with two hands');
 INSERT INTO ProductCategory VALUES ('Dagger', 'Weapon', 'A fine piece of weapon suitable for a fine fighter');
@@ -61,6 +203,7 @@ INSERT INTO ProductCategory VALUES ('Armour', 'Armour', 'A fine piece of body we
 INSERT INTO ProductCategory VALUES ('Sandal', 'Footwear', 'Great footwear for even the longest fights');
 INSERT INTO ProductCategory VALUES ('Various items', 'Other', 'Various items');
 INSERT INTO ProductCategory VALUES ('Trident', 'Weapon', 'A weapon fit for a God');
+
 INSERT INTO Product VALUES ('LMBTQ Chakram', 149.99, 'chakram-lmbtq.jpg', 'A chakram fit for anyone regardless of belief or sexual orientation', 1, 1);
 INSERT INTO Product VALUES ('Xena Chakram Alt', 179.99, 'chakram-xena2.png', 'The perfect replica of Xena''s most precious weapon', 1, 2);
 INSERT INTO Product VALUES ('Xena Chakram', 9999.99, 'chakram-xena.png', 'The original from the warrior princess herself... A once in a lifetime opportunity', 1, 2);
@@ -133,7 +276,20 @@ INSERT INTO Product VALUES ('Trident', 559.49, 'trident.jpg', 'A simple trident 
 INSERT INTO Product VALUES ('Trident of Poseidon', 9999.00, 'trident2.jpg', 'The Trident of Poseidon, the god of the seas, himself', 15, 2);
 INSERT INTO Product VALUES ('Trident', 649.99, 'trident3.jpg', 'A fine piece of trident for the collectors', 15, 4);
 
+INSERT INTO Users (Username, Password) VALUES ('admin', 'admin');
+INSERT INTO Users (Username, Password) VALUES ('user1', '1234');
+
+INSERT INTO BillingAddress VALUES ('Hungary', '1234', 'Budapest', 'Kossuth Lajos utca', '55', 1);
+INSERT INTO BillingAddress VALUES ('USA', '123456', 'New York', 'Fifth Avenue', '5555', 2);
+
+INSERT INTO ShippingAddress VALUES ('Hungary', '1234', 'Budapest', 'Kossuth Lajos utca', '55', 1);
+INSERT INTO ShippingAddress VALUES ('Greece', '10675', 'Athens', 'Agamemnon Street', '555', 2);
 
 SELECT * FROM Supplier;
 SELECT * FROM Product;
 SELECT * FROM ProductCategory;
+SELECT * FROM Users;
+SELECT * FROM BillingAddress;
+SELECT * FROM ShippingAddress;
+SELECT * FROM ShoppingCart;
+SELECT * FROM OrderHistory;
