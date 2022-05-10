@@ -27,22 +27,19 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public void Add(Supplier item)
         {
 
-            string query = $"INSERT INTO Supplier" +
-                           $"VALUES ({item.Name}, {item.Description});";
+            string query = $"INSERT INTO Supplier VALUES ({item.Name}, {item.Description});";
             Write(query);
         }
 
         public void Remove(int id)
         {
-            string query = $"DELETE FROM Supplier" +
-                           $"WHERE Id = {id};";
+            string query = $"DELETE FROM Supplier WHERE Id = {id};";
             Write(query);
         }
 
         public Supplier Get(int id)
         {
-            string query = $"SELECT * FROM Supplier" +
-                           $"WHERE Id = {id};";
+            string query = $"SELECT * FROM Supplier WHERE Id = {id};";
             return Read(query).First();
         }
 

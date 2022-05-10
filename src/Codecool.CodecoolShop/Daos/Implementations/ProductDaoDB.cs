@@ -14,7 +14,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         private ProductDaoDB()
         {
-            _productService = new ProductService(GetInstance(), ProductCategoryDaoDB.GetInstance(),
+            _productService = new ProductService(this, ProductCategoryDaoDB.GetInstance(),
                 SupplierDaoDB.GetInstance());
         }
 
@@ -25,8 +25,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(Product item)
         {
-            string query = "INSERT INTO Product (Name, Default_price, Image, Description, Product_category_id, Supplier_id)" +
-                           $"Values ('{item.Name}', {item.DefaultPrice}, '{item.Image}', '{item.Description}', {item.ProductCategory.Id}, {item.Supplier.Id});";
+            string query = $"INSERT INTO Product (Name, Default_price, Image, Description, Product_category_id, Supplier_id) Values ('{item.Name}', {item.DefaultPrice}, '{item.Image}', '{item.Description}', {item.ProductCategory.Id}, {item.Supplier.Id});";
             Write(query);
         }
 
@@ -38,8 +37,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public Product Get(int id)
         {
-            string query = "SELECT * FROM Product" +
-                           $"WHERE id = {id}";
+            string query = $"SELECT * FROM Product WHERE id = {id}";
             return Read(query).First();
         }
 
@@ -51,22 +49,19 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public IEnumerable<Product> GetBy(Supplier supplier)
         {
-            string query = "SELECT * FROM Product" +
-                           $"WHERE Supplier_id = {supplier.Id}";
+            string query = $"SELECT * FROM Product WHERE Supplier_id = {supplier.Id}";
             return Read(query);
         }
 
         public IEnumerable<Product> GetBy(ProductCategory productCategory)
         {
-            string query = "SELECT * FROM Product" +
-                           $"WHERE Product_category_id = {productCategory.Id}";
+            string query = $"SELECT * FROM Product WHERE Product_category_id = {productCategory.Id}";
             return Read(query);
         }
 
         public IEnumerable<Product> GetBy(ProductCategory productCategory, Supplier supplier)
         {
-            string query = "SELECT * FROM Product" +
-                           $"WHERE Supplier_id = {supplier.Id} AND Product_category_id = {productCategory.Id}";
+            string query = $"SELECT * FROM Product WHERE Supplier_id = {supplier.Id} AND Product_category_id = {productCategory.Id}";
             return Read(query);
         }
 

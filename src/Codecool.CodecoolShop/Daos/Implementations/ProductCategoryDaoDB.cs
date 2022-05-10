@@ -26,8 +26,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(ProductCategory item)
         {
-            string query = "INSERT INTO ProductCategory (Name, Department, Description)" +
-                           $"VALUES ('{item.Name}', '{item.Department}', '{item.Description}');";
+            string query = $"INSERT INTO ProductCategory (Name, Department, Description) VALUES ('{item.Name}', '{item.Department}', '{item.Description}');";
             Write(query);
         }
 
@@ -39,8 +38,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public ProductCategory Get(int id)
         {
-            string query = "SELECT * FROM ProductCategory" +
-                           $"WHERE Id = {id}";
+            string query = $"SELECT * FROM ProductCategory WHERE Id = {id}";
 
             return Read(query).First();
         }
