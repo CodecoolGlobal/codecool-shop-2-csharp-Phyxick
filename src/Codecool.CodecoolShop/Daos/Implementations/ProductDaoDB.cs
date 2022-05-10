@@ -80,6 +80,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 {
                     Product product = new Product
                     {
+                        Id = (int)reader["Id"],
                         Name = (string) reader["Name"], DefaultPrice = (decimal) reader["Default_price"],
                         Image = (string) reader["Image"], Description = (string) reader["Description"],
                         ProductCategory = _productService.GetProductCategory((int) reader["Product_category_id"]),

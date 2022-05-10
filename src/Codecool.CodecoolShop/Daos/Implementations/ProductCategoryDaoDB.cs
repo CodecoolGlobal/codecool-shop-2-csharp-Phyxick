@@ -65,6 +65,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 {
                     ProductCategory category = new ProductCategory
                     {
+                        Id = (int)reader["Id"],
                         Name = (string) reader["Name"], Department = (string) reader["Department"],
                         Description = (string) reader["Description"]
                     };

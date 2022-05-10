@@ -63,7 +63,10 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 while (reader.Read())
                 {
                     Supplier supplier = new Supplier
-                        {Name = (string) reader["Name"], Description = (string) reader["Description"]};
+                    {
+                        Id = (int) reader["Id"], Name = (string) reader["Name"],
+                        Description = (string) reader["Description"]
+                    };
 
                     data.Add(supplier);
                 }
