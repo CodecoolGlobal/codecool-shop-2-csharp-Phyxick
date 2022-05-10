@@ -1,64 +1,97 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
+using Codecool.CodecoolShop.Services;
+using Microsoft.Data.SqlClient;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
-    public class ProductDaoDB : IProductDao
+    public class ProductDaoDB : DbConnectionHelper<Product>, IProductDao
     {
-        private List<Product> data = new List<Product>();
-        private static ProductDaoDB instance = null;
+        private static ProductDaoDB _instance;
+        private readonly ProductService _productService;
 
         private ProductDaoDB()
         {
+            _productService = new ProductService(this, ProductCategoryDaoDB.GetInstance(),
+                SupplierDaoDB.GetInstance());
         }
 
         public static ProductDaoDB GetInstance()
         {
-            if (instance == null)
-            {
-                instance = new ProductDaoDB();
-            }
-
-            return instance;
+            return _instance ??= new ProductDaoDB();
         }
 
         public void Add(Product item)
         {
-            item.Id = data.Count + 1;
-            data.Add(item);
+            string query = $"INSERT INTO Product (Name, Default_price, Image, Description, Product_category_id, Supplier_id) Values ('{item.Name}', {item.DefaultPrice}, '{item.Image}', '{item.Description}', {item.ProductCategory.Id}, {item.Supplier.Id});";
+            Write(query);
         }
 
         public void Remove(int id)
         {
-            data.Remove(this.Get(id));
+            string query = $"DELETE FROM Product WHERE Id = {id}";
+            Write(query);
         }
 
         public Product Get(int id)
         {
-            return data.Find(x => x.Id == id);
+            string query = $"SELECT * FROM Product WHERE id = {id}";
+            return Read(query).First();
         }
 
         public IEnumerable<Product> GetAll()
         {
-            return data;
+            string query = "SELECT * FROM Product";
+            return Read(query);
         }
 
         public IEnumerable<Product> GetBy(Supplier supplier)
         {
-            return data.Where(x => x.Supplier.Id == supplier.Id);
+            string query = $"SELECT * FROM Product WHERE Supplier_id = {supplier.Id}";
+            return Read(query);
         }
 
         public IEnumerable<Product> GetBy(ProductCategory productCategory)
         {
-            return data.Where(x => x.ProductCategory.Id == productCategory.Id);
+            string query = $"SELECT * FROM Product WHERE Product_category_id = {productCategory.Id}";
+            return Read(query);
         }
 
         public IEnumerable<Product> GetBy(ProductCategory productCategory, Supplier supplier)
         {
-            return data.Where(x => x.Supplier.Id == supplier.Id && x.ProductCategory.Id == productCategory.Id);
+            string query = $"SELECT * FROM Product WHERE Supplier_id = {supplier.Id} AND Product_category_id = {productCategory.Id}";
+            return Read(query);
+        }
+
+        protected override List<Product> Read(string queryString)
+        {
+            using (SqlConnection connection = new SqlConnection(
+                       ConnectionString))
+            {
+                List<Product> data = new();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Product product = new Product
+                    {
+                        Id = (int)reader["Id"],
+                        Name = (string) reader["Name"], DefaultPrice = (decimal) reader["Default_price"],
+                        Image = (string) reader["Image"], Description = (string) reader["Description"],
+                        ProductCategory = _productService.GetProductCategory((int) reader["Product_category_id"]),
+                        Supplier = _productService.GetSupplier((int) reader["Supplier_id"])
+                    };
+                    
+                    data.Add(product);
+                }
+
+                return data;
+            }
         }
     }
 }
