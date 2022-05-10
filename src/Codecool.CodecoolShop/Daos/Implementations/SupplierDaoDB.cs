@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
+using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
+using Microsoft.Data.SqlClient;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
-    public class SupplierDaoDB : ISupplierDao
+    public class SupplierDaoDB : DbConnectionHelper<Supplier>, ISupplierDao
     {
-        private List<Supplier> data = new List<Supplier>();
+        private List<Supplier> _data = new List<Supplier>();
         private static SupplierDaoDB instance = null;
 
         private SupplierDaoDB()
@@ -24,23 +27,48 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(Supplier item)
         {
-            item.Id = data.Count + 1;
-            data.Add(item);
+            item.Id = _data.Count + 1;
+            _data.Add(item);
         }
 
         public void Remove(int id)
         {
-            data.Remove(this.Get(id));
+            _data.Remove(this.Get(id));
         }
 
         public Supplier Get(int id)
         {
-            return data.Find(x => x.Id == id);
+            string query = $"SELECT * FROM Supplier" +
+                           $"WHERE id = {id}";
+            return Read(query).First();
         }
 
         public IEnumerable<Supplier> GetAll()
         {
-            return data;
+            return _data;
+        }
+
+        protected override List<Supplier> Read(string queryString)
+        {
+            using (SqlConnection connection = new SqlConnection(
+                       ConnectionString))
+            {
+                List<Supplier> data = new();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Supplier supplier = new Supplier
+                        {Name = (string) reader["Name"], Description = (string) reader["Description"]};
+
+                    data.Add(supplier);
+                }
+
+                return data;
+            }
         }
     }
 }

@@ -1,64 +1,91 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
+using Codecool.CodecoolShop.Services;
+using Microsoft.Data.SqlClient;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
-    public class ProductDaoDB : IProductDao
+    public class ProductDaoDB : DbConnectionHelper<Product>, IProductDao
     {
-        private List<Product> data = new List<Product>();
-        private static ProductDaoDB instance = null;
+        private readonly List<Product> _data = new();
+        private static ProductDaoDB _instance;
+        private readonly ProductService _productService;
 
         private ProductDaoDB()
         {
+            _productService = new ProductService(GetInstance(), ProductCategoryDaoDB.GetInstance(),
+                SupplierDaoDB.GetInstance());
         }
 
         public static ProductDaoDB GetInstance()
         {
-            if (instance == null)
-            {
-                instance = new ProductDaoDB();
-            }
-
-            return instance;
+            return _instance ??= new ProductDaoDB();
         }
 
         public void Add(Product item)
         {
-            item.Id = data.Count + 1;
-            data.Add(item);
+            item.Id = _data.Count + 1;
+            _data.Add(item);
         }
 
         public void Remove(int id)
         {
-            data.Remove(this.Get(id));
+            _data.Remove(this.Get(id));
         }
 
         public Product Get(int id)
         {
-            return data.Find(x => x.Id == id);
+            return _data.Find(x => x.Id == id);
         }
 
         public IEnumerable<Product> GetAll()
         {
-            return data;
+            return _data;
         }
 
         public IEnumerable<Product> GetBy(Supplier supplier)
         {
-            return data.Where(x => x.Supplier.Id == supplier.Id);
+            return _data.Where(x => x.Supplier.Id == supplier.Id);
         }
 
         public IEnumerable<Product> GetBy(ProductCategory productCategory)
         {
-            return data.Where(x => x.ProductCategory.Id == productCategory.Id);
+            return _data.Where(x => x.ProductCategory.Id == productCategory.Id);
         }
 
         public IEnumerable<Product> GetBy(ProductCategory productCategory, Supplier supplier)
         {
-            return data.Where(x => x.Supplier.Id == supplier.Id && x.ProductCategory.Id == productCategory.Id);
+            return _data.Where(x => x.Supplier.Id == supplier.Id && x.ProductCategory.Id == productCategory.Id);
+        }
+
+        protected override List<Product> Read(string queryString)
+        {
+            using (SqlConnection connection = new SqlConnection(
+                       ConnectionString))
+            {
+                List<Product> data = new();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Product product = new Product
+                    {
+                        Name = (string) reader["Name"], DefaultPrice = (decimal) reader["Default_price"],
+                        Image = (string) reader["Image"], Description = (string) reader["Description"],
+                        ProductCategory = _productService.GetProductCategory((int) reader["Product_category_id"]),
+                        Supplier = _productService.GetSupplier((int) reader["Supplier_id"])
+                    };
+                    
+                    data.Add(product);
+                }
+
+                return data;
+            }
         }
     }
 }

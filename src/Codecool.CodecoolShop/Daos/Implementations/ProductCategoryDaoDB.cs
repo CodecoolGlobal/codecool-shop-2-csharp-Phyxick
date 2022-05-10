@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
+using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
+using Microsoft.Data.SqlClient;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
-    class ProductCategoryDaoDB : IProductCategoryDao
+    class ProductCategoryDaoDB : DbConnectionHelper<ProductCategory>, IProductCategoryDao
     {
-        private List<ProductCategory> data = new List<ProductCategory>();
+        private List<ProductCategory> _data = new List<ProductCategory>();
         private static ProductCategoryDaoDB instance = null;
 
         private ProductCategoryDaoDB()
@@ -24,23 +27,51 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(ProductCategory item)
         {
-            item.Id = data.Count + 1;
-            data.Add(item);
+            item.Id = _data.Count + 1;
+            _data.Add(item);
         }
 
         public void Remove(int id)
         {
-            data.Remove(this.Get(id));
+            _data.Remove(this.Get(id));
         }
 
         public ProductCategory Get(int id)
         {
-            return data.Find(x => x.Id == id);
+            string query = $"SELECT * FROM ProductCategory" +
+                           $"WHERE id = {id}";
+            return Read(query).First();
         }
 
         public IEnumerable<ProductCategory> GetAll()
         {
-            return data;
+            return _data;
+        }
+
+        protected override List<ProductCategory> Read(string queryString)
+        {
+            using (SqlConnection connection = new SqlConnection(
+                       ConnectionString))
+            {
+                List<ProductCategory> data = new();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ProductCategory category = new ProductCategory
+                    {
+                        Name = (string) reader["Name"], Department = (string) reader["Department"],
+                        Description = (string) reader["Description"]
+                    };
+
+                    data.Add(category);
+                }
+
+                return data;
+            }
         }
     }
 }
