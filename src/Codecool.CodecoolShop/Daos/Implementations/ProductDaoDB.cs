@@ -9,7 +9,6 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class ProductDaoDB : DbConnectionHelper<Product>, IProductDao
     {
-        private readonly List<Product> _data = new();
         private static ProductDaoDB _instance;
         private readonly ProductService _productService;
 
@@ -26,38 +25,49 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(Product item)
         {
-            item.Id = _data.Count + 1;
-            _data.Add(item);
+            string query = "INSERT INTO Product (Name, Default_price, Image, Description, Product_category_id, Supplier_id)" +
+                           $"Values ('{item.Name}', {item.DefaultPrice}, '{item.Image}', '{item.Description}', {item.ProductCategory.Id}, {item.Supplier.Id});";
+            Write(query);
         }
 
         public void Remove(int id)
         {
-            _data.Remove(this.Get(id));
+            string query = $"DELETE FROM Product WHERE Id = {id}";
+            Write(query);
         }
 
         public Product Get(int id)
         {
-            return _data.Find(x => x.Id == id);
+            string query = "SELECT * FROM Product" +
+                           $"WHERE id = {id}";
+            return Read(query).First();
         }
 
         public IEnumerable<Product> GetAll()
         {
-            return _data;
+            string query = "SELECT * FROM Product";
+            return Read(query);
         }
 
         public IEnumerable<Product> GetBy(Supplier supplier)
         {
-            return _data.Where(x => x.Supplier.Id == supplier.Id);
+            string query = "SELECT * FROM Product" +
+                           $"WHERE Supplier_id = {supplier.Id}";
+            return Read(query);
         }
 
         public IEnumerable<Product> GetBy(ProductCategory productCategory)
         {
-            return _data.Where(x => x.ProductCategory.Id == productCategory.Id);
+            string query = "SELECT * FROM Product" +
+                           $"WHERE Product_category_id = {productCategory.Id}";
+            return Read(query);
         }
 
         public IEnumerable<Product> GetBy(ProductCategory productCategory, Supplier supplier)
         {
-            return _data.Where(x => x.Supplier.Id == supplier.Id && x.ProductCategory.Id == productCategory.Id);
+            string query = "SELECT * FROM Product" +
+                           $"WHERE Supplier_id = {supplier.Id} AND Product_category_id = {productCategory.Id}";
+            return Read(query);
         }
 
         protected override List<Product> Read(string queryString)

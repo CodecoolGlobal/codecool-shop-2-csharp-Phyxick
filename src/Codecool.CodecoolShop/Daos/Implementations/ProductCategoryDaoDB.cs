@@ -8,8 +8,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 {
     class ProductCategoryDaoDB : DbConnectionHelper<ProductCategory>, IProductCategoryDao
     {
-        private List<ProductCategory> _data = new List<ProductCategory>();
-        private static ProductCategoryDaoDB instance = null;
+        private static ProductCategoryDaoDB _instance = null;
 
         private ProductCategoryDaoDB()
         {
@@ -17,35 +16,40 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public static ProductCategoryDaoDB GetInstance()
         {
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = new ProductCategoryDaoDB();
+                _instance = new ProductCategoryDaoDB();
             }
 
-            return instance;
+            return _instance;
         }
 
         public void Add(ProductCategory item)
         {
-            item.Id = _data.Count + 1;
-            _data.Add(item);
+            string query = "INSERT INTO ProductCategory (Name, Department, Description)" +
+                           $"VALUES ('{item.Name}', '{item.Department}', '{item.Description}');";
+            Write(query);
         }
 
         public void Remove(int id)
         {
-            _data.Remove(this.Get(id));
+            string query = $"DELETE FROM ProductCategory WHERE Id = {id};";
+            Write(query);
         }
 
         public ProductCategory Get(int id)
         {
-            string query = $"SELECT * FROM ProductCategory" +
-                           $"WHERE id = {id}";
+            string query = "SELECT * FROM ProductCategory" +
+                           $"WHERE Id = {id}";
+
             return Read(query).First();
         }
 
         public IEnumerable<ProductCategory> GetAll()
         {
-            return _data;
+            string query = "SELECT * FROM ProductCategory";
+
+            return Read(query);
         }
 
         protected override List<ProductCategory> Read(string queryString)
