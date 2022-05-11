@@ -243,12 +243,6 @@ INSERT INTO Product VALUES ('Trident', 649.99, 'trident3.jpg', 'A fine piece of 
 INSERT INTO Users VALUES ('admin', 'admin', '', '', '', '', '', '', '', '', '', '', '', '', '');
 INSERT INTO Users VALUES ('user1', '1234', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
-INSERT INTO BillingAddress VALUES ('Hungary', '1234', 'Budapest', 'Kossuth Lajos utca', '55', 1);
-INSERT INTO BillingAddress VALUES ('USA', '123456', 'New York', 'Fifth Avenue', '5555', 2);
-
-INSERT INTO ShippingAddress VALUES ('Hungary', '1234', 'Budapest', 'Kossuth Lajos utca', '55', 1);
-INSERT INTO ShippingAddress VALUES ('Greece', '10675', 'Athens', 'Agamemnon Street', '555', 2);
-
 SELECT * FROM Supplier;
 SELECT * FROM Product;
 SELECT * FROM ProductCategory;
