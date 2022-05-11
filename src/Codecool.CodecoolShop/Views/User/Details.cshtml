@@ -1,0 +1,95 @@
+﻿@model dynamic
+
+@{
+    Layout = null;
+    var user = ViewData["user"] as User;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>User details</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta name="viewport" content="width=device-width"/>
+    <title>Index</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/FormCSS.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
+</head>
+<body>
+<div>
+    <form method="post" action="@Url.Action("UpdateUserData", "User")">
+        <fieldset class="form-style-1">
+            <legend>Add Checkout</legend>
+            <div>
+                <label for="Name">Name:</label>
+                <input type="text" name="Name" value="@if (user != null) {@user.Name}" required="required" />
+            </div>
+            <div>
+                <label for="Email">Email:</label>
+                <input type="email" name="Email" value="@if (user != null) {@user.Email}" required="required" />
+            </div>
+            <div>
+                <label for="Phone number">Phone number:</label>
+                <input type="text" name="Phone number" value="@if (user != null) {@user.Phone}" />
+            </div>
+            <h3>Billing Address </h3>
+            <p id="shiptobilling" class="form-row">
+                Same as Shipping <input type="checkbox" onclick="SetBilling(this.checked);" />
+            </p>
+            <div>
+                <label for="Country">Country:</label>
+                <input id="country" type="text" name="Billing Country" value="@if (user != null) {@user.BillingCountry}" required="required" />
+                <div>
+                    <label for="Zipcode">Zipcode:</label>
+                    <input id="zipcode" type="text" name="Billing Zipcode" value="@if (user != null) {@user.BillingZipcode}" required="required" />
+                </div>
+                <div>
+                    <label for="City">City Name:</label>
+                    <input id="city" type="text" name="Billing City" value="@if (user != null) {@user.BillingCity}" required="required" />
+                </div>
+                <div>
+                    <label for="Street">Street Name:</label>
+                    <input id="street" type="text" name="Billing Street" value="@if (user != null) {@user.BillingStreet}" required="required" />
+                </div>
+                <div>
+                    <label for="House">House Number:</label>
+                    <input id="house-number" type="text" name="Billing House" value="@if (user != null) {@user.BillingHouseNumber}" required="required" />
+                </div>
+            </div>
+            <div id="deliveryaddres" style="display:block" ; style="display:none" ;>
+                <h3>Shipping  Address </h3>
+                <div>
+                    <label for="Country">Country:</label>
+                    <input id="deliver-country" type="text" name="Shipping Country" value="@if (user != null) {@user.ShippingCountry}" required="required" />
+                </div>
+                <div>
+                    <label for="Zipcode">Zipcode:</label>
+                    <input id="delivery-zipcode" type="text" name="Shipping Zipcode" value="@if (user != null) {@user.ShippingZipcode}" required="required" />
+                </div>
+                <div>
+                    <label for="City">City Name:</label>
+                    <input id="deliver-city" type="text" name="Shipping City" value="@if (user != null) {@user.ShippingCity}" required="required" />
+                </div>
+                <div>
+                    <label for="Street">Street Name:</label>
+                    <input id="deliver-street" type="text" name="Shipping Street" value="@if (user != null) {@user.ShippingStreet}" required="required" />
+                </div>
+                <div>
+                    <label for="House">House Number:</label>
+                    <input id="deliver-house-number" type="text" name="Shipping House" value="@if (user != null) {@user.ShippingHouseNumber}" required="required" />
+                </div>
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <input type="submit" value="Submit" class="submit" />
+            </div>
+        </fieldset>
+    </form>
+</div>
+<a asp-action="Index" asp-controller="Product">Go back to main page</a>
+</body>
+</html>
