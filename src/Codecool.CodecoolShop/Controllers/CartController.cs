@@ -21,6 +21,8 @@ namespace Codecool.CodecoolShop.Controllers
         private readonly ILogger<CartController> _logger;
         public ProductService ProductService { get; set; }
 
+        public UserService UserService { get; set; }
+
         public CartController(ILogger<CartController> logger)
         {
             _logger = logger;
@@ -28,6 +30,7 @@ namespace Codecool.CodecoolShop.Controllers
                 ProductDaoDB.GetInstance(),
                 ProductCategoryDaoDB.GetInstance(),
                 SupplierDaoDB.GetInstance());
+            UserService = new UserService(UserDaoDB.GetInstance());
         }
 
         [Route("cart")]
@@ -129,6 +132,8 @@ namespace Codecool.CodecoolShop.Controllers
         }
         public IActionResult Checkout()
         {
+            string username = HttpContext.Session.GetString("username")?.Replace("\"", "");
+            ViewData["user"] = UserService.GetUserData(username);
             var Id = Guid.NewGuid();
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
