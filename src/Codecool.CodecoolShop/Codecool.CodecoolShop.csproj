@@ -6,6 +6,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Log\**" />
+	  <Content Remove="Log\**" />
+	  <EmbeddedResource Remove="Log\**" />
+	  <None Remove="Log\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Remove="Views\Cart\Checkout.razor" />
 	</ItemGroup>
 
@@ -20,10 +27,6 @@
 		<PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
 		<PackageReference Include="Serilog.Sinks.Map" Version="1.0.2" />
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Log\" />
 	</ItemGroup>
 
 </Project>
