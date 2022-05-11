@@ -9,5 +9,9 @@ namespace Codecool.CodecoolShop.Daos
         void Remove(User user);
 
         bool Register(User user);
+
+        User GetUserData(string username);
+
+        void UpdateUserData(User user);
     }
 }
