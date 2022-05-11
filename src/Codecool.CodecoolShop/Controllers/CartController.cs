@@ -24,10 +24,7 @@ namespace Codecool.CodecoolShop.Controllers
         public CartController(ILogger<CartController> logger)
         {
             _logger = logger;
-            ProductService = new ProductService(
-                ProductDaoDB.GetInstance(),
-                ProductCategoryDaoDB.GetInstance(),
-                SupplierDaoDB.GetInstance());
+            ProductService = ServiceHelper.GetProductService();
         }
 
         [Route("cart")]
