@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
@@ -12,6 +15,22 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         private ProductCategoryDaoDB()
         {
+            sorce = new JsonConfigurationSource();
+            sorce.Path = "appsettings.json";
+            valami = new JsonConfigurationProvider(sorce);
+            string value;
+            valami.TryGet("Mode", out value);
+
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json").Build();
+
+
+            var section = config.GetSection("ConnectionStrings");
+            var valami2 =section.GetChildren();
+            var valami3 = valami2.First().Value;
+            var valami4 = valami2.First(x => x.Key == "DefaultConnection").Value;
+
         }
 
         public static ProductCategoryDaoDB GetInstance()
