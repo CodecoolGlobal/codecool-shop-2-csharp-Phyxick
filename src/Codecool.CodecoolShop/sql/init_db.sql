@@ -37,8 +37,8 @@ CREATE TABLE Supplier
 CREATE TABLE Users
 (
 	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	Username VARCHAR(20) NOT NULL UNIQUE,
-	Password TEXT NOT NULL,
+	Username VARCHAR(255) NOT NULL UNIQUE,
+	Password VARCHAR(255) NOT NULL,
 	Name TEXT,
 	Email TEXT,
 	Phone TEXT,
@@ -240,8 +240,8 @@ INSERT INTO Product VALUES ('Trident', 559.49, 'trident.jpg', 'A simple trident 
 INSERT INTO Product VALUES ('Trident of Poseidon', 9999.00, 'trident2.jpg', 'The Trident of Poseidon, the god of the seas, himself', 15, 2);
 INSERT INTO Product VALUES ('Trident', 649.99, 'trident3.jpg', 'A fine piece of trident for the collectors', 15, 4);
 
-INSERT INTO Users (Username, Password) VALUES ('admin', 'admin');
-INSERT INTO Users (Username, Password) VALUES ('user1', '1234');
+INSERT INTO Users VALUES ('admin', 'admin', '', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO Users VALUES ('user1', '1234', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
 INSERT INTO BillingAddress VALUES ('Hungary', '1234', 'Budapest', 'Kossuth Lajos utca', '55', 1);
 INSERT INTO BillingAddress VALUES ('USA', '123456', 'New York', 'Fifth Avenue', '5555', 2);
@@ -253,7 +253,5 @@ SELECT * FROM Supplier;
 SELECT * FROM Product;
 SELECT * FROM ProductCategory;
 SELECT * FROM Users;
-SELECT * FROM BillingAddress;
-SELECT * FROM ShippingAddress;
 SELECT * FROM ShoppingCart;
 SELECT * FROM OrderHistory;

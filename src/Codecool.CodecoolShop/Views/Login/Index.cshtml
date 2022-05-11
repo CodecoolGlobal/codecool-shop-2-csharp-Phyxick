@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Routing
+@using RouteData = Microsoft.AspNetCore.Components.RouteData
+@{
+    Layout = null;
+    string message = ViewData["message"] as string;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login/Registration</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta name="viewport" content="width=device-width"/>
+    <title>Index</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/FormCSS.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
+</head>
+<body>
+<div id="login-form">
+    <form method="post" action="@Url.Action("ValidateLogin", "Login")">
+        <label for="login-username">Username</label>
+        <input type="text" name="username" class="form" size="10">
+        <label for="login-password">Password</label>
+        <input type="password" name="password" class="form" size="10">
+        <button type="submit" id="login-button">Login</button>
+    </form>
+    <p>Not registered yet? Click <a id="register">here</a> to register now!</p>
+</div>
+<div id="register-form" hidden="hidden">
+    <form method="post" action="@Url.Action("Register", "Login")">
+        <label for="login-username">Username</label>
+        <input type="text" name="username" class="form" size="10">
+        <label for="login-password">Password</label>
+        <input type="password" name="password" class="form" size="10">
+        <label for="login-email">Email</label>
+        <input type="email" name="email" class="form" size="10">
+        <button type="submit" id="register-button">Register</button>
+    </form>
+    <p>Already have any account? Click <a id="login">here</a> to log in now!</p>
+</div>
+@if (message != null)
+{
+    Console.WriteLine("ok");
+    <h1>@message</h1>
+}
+
+</body>

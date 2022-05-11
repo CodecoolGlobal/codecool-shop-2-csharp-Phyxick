@@ -233,3 +233,8 @@ a {
 .text-dark {
     color: #303a7a !important;
 }
+
+.form {
+    background-color: rgb(252, 237, 219);
+    border-radius: 15px;
+}
