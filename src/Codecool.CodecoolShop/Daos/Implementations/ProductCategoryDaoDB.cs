@@ -13,34 +13,14 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     {
         private static ProductCategoryDaoDB _instance = null;
 
-        private ProductCategoryDaoDB()
+        private ProductCategoryDaoDB(string connectionString)
         {
-            sorce = new JsonConfigurationSource();
-            sorce.Path = "appsettings.json";
-            valami = new JsonConfigurationProvider(sorce);
-            string value;
-            valami.TryGet("Mode", out value);
-
-            var config = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json").Build();
-
-
-            var section = config.GetSection("ConnectionStrings");
-            var valami2 =section.GetChildren();
-            var valami3 = valami2.First().Value;
-            var valami4 = valami2.First(x => x.Key == "DefaultConnection").Value;
-
+            ConnectionString = connectionString;
         }
 
-        public static ProductCategoryDaoDB GetInstance()
+        public static ProductCategoryDaoDB GetInstance(string connectionString)
         {
-            if (_instance == null)
-            {
-                _instance = new ProductCategoryDaoDB();
-            }
-
-            return _instance;
+            return _instance ??= new ProductCategoryDaoDB(connectionString);
         }
 
         public void Add(ProductCategory item)
