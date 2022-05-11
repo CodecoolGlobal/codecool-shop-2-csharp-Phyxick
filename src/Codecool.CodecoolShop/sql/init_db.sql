@@ -37,43 +37,28 @@ CREATE TABLE Supplier
 CREATE TABLE Users
 (
 	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	Username TEXT NOT NULL,
+	Username TEXT NOT NULL UNIQUE,
 	Password TEXT NOT NULL,
 	Name TEXT,
 	Email TEXT,
 	Phone TEXT,
-	Billing_address_id INT,
-	Shipping_address_id INT,
-	Shopping_cart_id INT,
-	Order_history_id INT
-);
-
-CREATE TABLE BillingAddress
-(
-	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	Country TEXT,
-	Zipcode TEXT,
-	City TEXT,
-	Street TEXT,
-	House_number INT,
-	User_id INT
-);
-
-CREATE TABLE ShippingAddress
-(
-	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	Country TEXT,
-	Zipcode TEXT,
-	City TEXT,
-	Street TEXT,
-	House_number INT,
-	User_id INT
+	Billing_country TEXT,
+	Billing_zipcode TEXT,
+	Billing_city TEXT,
+	Billing_street TEXT,
+	Billing_house_number TEXT,
+	Shipping_country TEXT,
+	Shipping_zipcode TEXT,
+	Shipping_city TEXT,
+	Shipping_street TEXT,
+	Shipping_house_number TEXT
 );
 
 CREATE TABLE ShoppingCart
 (
 	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	Items TEXT
+	Product_id INT,
+	User_id INT
 );
 
 CREATE TABLE OrderHistory
@@ -107,23 +92,11 @@ ALTER TABLE Product
 ALTER TABLE Product
 	DROP CONSTRAINT IF EXISTS FK_Product_Supplier;
 
-ALTER TABLE Users
-	DROP CONSTRAINT IF EXISTS FK_Users_Billing_address;
+ALTER TABLE ShoppingCart
+	DROP CONSTRAINT IF EXISTS FK_ShoppingCart_User_id;
 
-ALTER TABLE Users
-	DROP CONSTRAINT IF EXISTS FK_Users_Shipping_address;
-
-ALTER TABLE Users
-	DROP CONSTRAINT IF EXISTS FK_Users_Shopping_cart;
-
-ALTER TABLE Users
-	DROP CONSTRAINT IF EXISTS FK_Users_Order_history;
-
-ALTER TABLE BillingAddress
-	DROP CONSTRAINT IF EXISTS FK_BillingAddress_User_id;
-
-ALTER TABLE ShippingAddress
-	DROP CONSTRAINT IF EXISTS FK_ShippingAddress_User_id;
+ALTER TABLE ShoppingCart
+	DROP CONSTRAINT IF EXISTS FK_ShoppingCart_Product_id;
 
 ALTER TABLE OrderHistory
 	ADD CONSTRAINT FK_OrderHistory_User_id FOREIGN KEY (User_id)
@@ -160,28 +133,19 @@ ALTER TABLE Product
     ON UPDATE CASCADE
 ;
 
-ALTER TABLE Users
-	ADD CONSTRAINT FK_Users_Billing_address FOREIGN KEY (Billing_address_id)
-	REFERENCES BillingAddress (Id)
+ALTER TABLE ShoppingCart
+	ADD CONSTRAINT FK_ShoppingCart_User_id FOREIGN KEY (User_id)
+	REFERENCES Users (Id)
 	ON DELETE CASCADE
     ON UPDATE CASCADE
 ;
 
-ALTER TABLE Users
-	ADD CONSTRAINT FK_Users_Shipping_address FOREIGN KEY (Shipping_address_id)
-	REFERENCES ShippingAddress (Id)
+ALTER TABLE ShoppingCart
+	ADD CONSTRAINT FK_ShoppingCart_Product_id FOREIGN KEY (Product_id)
+	REFERENCES Product (Id)
 	ON DELETE CASCADE
     ON UPDATE CASCADE
 ;
-
-ALTER TABLE Users
-	ADD CONSTRAINT FK_Users_Shopping_cart FOREIGN KEY (Shopping_cart_id)
-	REFERENCES ShoppingCart (Id)
-	ON DELETE CASCADE
-    ON UPDATE CASCADE
-;
-
-
 
 INSERT INTO Supplier VALUES ('Amazon', 'Digital content and services');
 INSERT INTO Supplier VALUES ('Greek Hand Made Company', 'Hand crafted items directly from Greece');
