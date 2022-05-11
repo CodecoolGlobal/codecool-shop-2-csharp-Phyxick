@@ -163,9 +163,6 @@ function SetBilling(checked) {
         $('#city').bind('keypress blur', function () { $('#deliver-city').val($(this).val()); });
         $('#street').bind('keypress blur', function () { $('#deliver-street').val($(this).val()); });
         $('#house-number').bind('keypress blur', function () { $('#deliver-house-number').val($(this).val()); });
-        
-
-
     }
     else {
         document.getElementById('deliveryaddres').style.display = "block";
@@ -174,6 +171,18 @@ function SetBilling(checked) {
         document.getElementById('delivery-city').value = '';
         document.getElementById('delivery-street').value = '';
         document.getElementById('delivery-house').value = '';
-
     }
 }
+
+let loginButton = document.querySelector('#login');
+let registerButton = document.querySelector('#register');
+let loginForm = document.querySelector('#login-form');
+let registerForm = document.querySelector('#register-form');
+loginButton.addEventListener('click', () => {
+    registerForm.setAttribute('hidden', 'hidden');
+    loginForm.removeAttribute('hidden');
+});
+registerButton.addEventListener('click', () => {
+    loginForm.setAttribute('hidden', 'hidden');
+    registerForm.removeAttribute('hidden');
+});

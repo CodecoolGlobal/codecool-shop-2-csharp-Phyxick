@@ -29,7 +29,10 @@ namespace Codecool.CodecoolShop.Helpers
             }
         }
 
-        protected abstract List<T> Read(string queryString);
+        protected virtual List<T> Read(string queryString)
+        {
+            throw new NotImplementedException();
+        }
 
         protected string ConnectionString => ConfigurationManager.AppSettings["connectionString"];
 
