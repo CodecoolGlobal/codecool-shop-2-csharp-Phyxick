@@ -23,6 +23,11 @@ a {
     margin: 0 0 1rem;
 }
 
+.bottom-motive {
+    position: sticky;
+    top: 663px;
+}
+
 .navbar {
     padding: 0.5rem 1rem 0;
     background-color: #d2b38b;
@@ -109,13 +114,30 @@ body {
 }
 
 .footer {
-  position: absolute;
-    bottom: 0;
-    width: 100%;
+    position: sticky;
+/*    bottom: 0;
+*/    width: 100%;
     white-space: nowrap;
     line-height: 30px; /* Vertically center the text there */
     background-color: #d2b38b;
+    top: 683px;
 }
+
+@-moz-document url-prefix() {
+    .footer {
+        position: sticky;
+        top: 681px;
+        white-space: nowrap;
+        max-height: 30px; /* Vertically center the text there */
+        background-color: #d2b38b;
+    }
+
+    .bottom-motive {
+        position: sticky;
+        top: 661px;
+    }
+}
+
 
 @charset "UTF-8";
 
