@@ -70,12 +70,12 @@
                 </div>
                 @if (Context.Session.GetString("username") == null)
                 {
-                    <a class="nav-link text-dark" id="login" asp-controller="Login" asp-action="Index">Login/Reg</a>
+                    <a class="nav-link text-dark" id="login" asp-controller="User" asp-action="Index">Login/Reg</a>
                 }
                 else
                 {
-                    <a class="nav-link text-dark" id="logout" asp-controller="Login" asp-action="Logout">Logout</a>
-                    <a class="nav-link text-dark" id="username" asp-controller="Login" asp-action="Index">@Context.Session.GetString("username").Replace("\"", "")</a>
+                    <a class="nav-link text-dark" id="logout" asp-controller="User" asp-action="Logout">Logout</a>
+                    <a class="nav-link text-dark" id="username" asp-controller="User" asp-action="Details">@Context.Session.GetString("username").Replace("\"", "")</a>
                 }
                 
                 <a class="nav-link text-dark fa-solid fa-sailboat" asp-area="" asp-controller="Cart" asp-action="Index">καλάθι &#129530; (@cartItems)</a>

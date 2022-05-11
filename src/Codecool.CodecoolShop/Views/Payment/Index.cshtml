@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    var user = ViewData["user"] as User;
 }
 
 <!DOCTYPE html>
@@ -20,29 +21,29 @@
     <fieldset class="form-style-1">
         <legend>Payment</legend>
         <div>
-            <label for="card-name">Card Holder Name:</label>
-            <input type="text" name="card-name" value="" required="required"/>
+            <label for="Card Holder Name">Card Holder Name:</label>
+            <input type="text" name="Card Holder Name" value="@if (user != null) {@user.CardHolderName}" required="required"/>
         </div>
         <div>
-            <label for="card">Card Number:</label>
-            <input type="text" name="cardN" value="" required="required"/>
+            <label for="Card Number">Card Number:</label>
+            <input type="text" name="Card Number" value="@if (user != null) {@user.CardNumber}" required="required"/>
         </div>
         <div>
-            <label for="expiry">Expiry Date:</label>
-            <input type="datetime" name="expiry" value="" />
+            <label for="Expiry Date">Expiry Date:</label>
+            <input type="datetime" name="Expiry Date" value="@if (user != null) {@user.ExpiryDate}" />
         </div>
         <div>
             <label for="CVV">CVV Code:</label>
-            <input type="text" name="CVV" value="" />
+            <input type="text" name="CVV" value="@if (user != null) {@user.CVVCode}" />
         </div>
-        <div hidden="true">
+@*        <div hidden="true">
             <label for="Email">Email:</label>
             <input class="field-long" type="text" name="Email" value="@ViewData["email"]" />
         </div>
         <div hidden="true">
             <label for="Name">Name:</label>
             <input type="text" name="Name" value="@ViewData["name"]" />
-        </div>
+        </div>*@
         <br>
         <input type="submit" value="Submit" class="submit" />
     </fieldset>
