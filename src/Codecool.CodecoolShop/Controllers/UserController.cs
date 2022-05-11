@@ -33,7 +33,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             string username = Request.Form["Username"];
             string password = Request.Form["Password"];
-            User user = new User() {Username = username, Password = password};
+            User user = new User() { Username = username, Password = password };
             if (UserService.ValidateLogin(user))
             {
                 if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "username") == null)
@@ -45,7 +45,7 @@ namespace Codecool.CodecoolShop.Controllers
             }
 
             var message = "Please enter the correct credentials!";
-            return RedirectToAction("Index", "User", new {message = message});
+            return RedirectToAction("Index", "User", new { message = message });
         }
 
         public IActionResult Register()
@@ -53,7 +53,7 @@ namespace Codecool.CodecoolShop.Controllers
             string username = Request.Form["Username"];
             string password = Request.Form["Password"];
             string email = Request.Form["Email"];
-            User user = new User() { Id = 1, Username = username, Password = password, Email = email, Name = "", Phone = "", BillingCountry = "", BillingCity = "", BillingZipcode = "", BillingStreet = "", BillingHouseNumber = "", ShippingCountry = "", ShippingCity = "", ShippingZipcode = "", ShippingStreet = "", ShippingHouseNumber = ""};
+            User user = new User() { Username = username, Password = password, Email = email, Name = "", Phone = "", BillingCountry = "", BillingCity = "", BillingZipcode = "", BillingStreet = "", BillingHouseNumber = "", ShippingCountry = "", ShippingCity = "", ShippingZipcode = "", ShippingStreet = "", ShippingHouseNumber = "", CardHolderName = "", CardNumber = "", ExpiryDate = "", CVVCode = "" };
             if (UserService.Register(user))
             {
                 emailSender.SendConfirmationEmail(username, email);
