@@ -12,15 +12,16 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         private static ProductDaoDB _instance;
         private readonly ProductService _productService;
 
-        private ProductDaoDB()
+        private ProductDaoDB(string connectionString)
         {
-            _productService = new ProductService(this, ProductCategoryDaoDB.GetInstance(),
-                SupplierDaoDB.GetInstance());
+            ConnectionString = connectionString;
+            _productService = new ProductService(this, ProductCategoryDaoDB.GetInstance(connectionString),
+                SupplierDaoDB.GetInstance(connectionString));
         }
 
-        public static ProductDaoDB GetInstance()
+        public static ProductDaoDB GetInstance(string connectionString)
         {
-            return _instance ??= new ProductDaoDB();
+            return _instance ??= new ProductDaoDB(connectionString);
         }
 
         public void Add(Product item)

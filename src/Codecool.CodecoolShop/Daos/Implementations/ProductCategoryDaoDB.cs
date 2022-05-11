@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
@@ -10,18 +13,14 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     {
         private static ProductCategoryDaoDB _instance = null;
 
-        private ProductCategoryDaoDB()
+        private ProductCategoryDaoDB(string connectionString)
         {
+            ConnectionString = connectionString;
         }
 
-        public static ProductCategoryDaoDB GetInstance()
+        public static ProductCategoryDaoDB GetInstance(string connectionString)
         {
-            if (_instance == null)
-            {
-                _instance = new ProductCategoryDaoDB();
-            }
-
-            return _instance;
+            return _instance ??= new ProductCategoryDaoDB(connectionString);
         }
 
         public void Add(ProductCategory item)

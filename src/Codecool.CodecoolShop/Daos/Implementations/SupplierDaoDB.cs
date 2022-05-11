@@ -10,18 +10,14 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     {
         private static SupplierDaoDB _instance = null;
 
-        private SupplierDaoDB()
+        private SupplierDaoDB(string connectionString)
         {
+            ConnectionString = connectionString;
         }
 
-        public static SupplierDaoDB GetInstance()
+        public static SupplierDaoDB GetInstance(string connectionString)
         {
-            if (_instance == null)
-            {
-                _instance = new SupplierDaoDB();
-            }
-
-            return _instance;
+            return _instance ??= new SupplierDaoDB(connectionString);
         }
 
         public void Add(Supplier item)

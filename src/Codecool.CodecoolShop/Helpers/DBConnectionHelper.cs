@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration.Json;
 
 namespace Codecool.CodecoolShop.Helpers
 {
@@ -30,8 +31,8 @@ namespace Codecool.CodecoolShop.Helpers
         }
 
         protected abstract List<T> Read(string queryString);
-
-        protected string ConnectionString => ConfigurationManager.AppSettings["connectionString"];
+        
+        protected string ConnectionString;
 
         public bool TestConnection()
         {
