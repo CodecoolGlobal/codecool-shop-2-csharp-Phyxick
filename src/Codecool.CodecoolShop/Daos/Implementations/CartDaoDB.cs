@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
+using System.Linq;
 using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
-using Codecool.CodecoolShop.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 
 namespace Codecool.CodecoolShop.Daos;
@@ -54,7 +52,7 @@ public class CartDaoDB : DbConnectionHelper<User>, ICartDao
                 };
                 cart.Add(item);
             }
-            // ShoppingCart.Product_id, ShoppingCart.User_id, Product.Name, Product.Default_price, Product.Image, Product.Description, Product.Product_category_id, Product.Supplier_id, Count(Product.Id) as Quantity
+
 
             return cart;
         }
@@ -69,18 +67,18 @@ public class CartDaoDB : DbConnectionHelper<User>, ICartDao
         return _instance;
     }
 
-    public bool SaveShoppingCart(int UserId, List<Item> carts)
+    public bool SaveShoppingCart(int UserId, List<Item> cart)
     {
         RemovePrevious(UserId);
         if (UserId != default)
         {
             Guid CartId = Guid.NewGuid();
-            foreach (var cart in carts)
+            foreach (var item in cart)
             {
-                for (int i = 0; i < cart.Quantity; i++)
+                for (int i = 0; i < item.Quantity; i++)
                 {
                     string query = @$"INSERT INTO ShoppingCart
-                            VALUES ('{cart.Product.Id}', '{UserId}');";
+                            VALUES ('{item.Product.Id}', '{UserId}');";
                     Write(query);
                 }
             }
@@ -103,5 +101,95 @@ public class CartDaoDB : DbConnectionHelper<User>, ICartDao
         GROUP BY ShoppingCart.Product_id, ShoppingCart.User_id, Product.Id, Product.Name, Product.Default_price, Product.Image, Product.Description, Product.Product_category_id, Product.Supplier_id;";
         cart = Read(query);
         return cart;
+    }
+
+    public void SaveOrder(List<Item> cart, int userId)
+    {
+        decimal totalPrice = cart.Sum(i => i.Product.DefaultPrice);
+        var totalPriceString = totalPrice.ToString().Replace(',', '.');
+        var date = DateTime.Now.ToString().Replace(". ", "").Insert(8, " ");
+        string query = $"INSERT INTO OrderHistory VALUES ('{date}', 'Checked', {totalPriceString}, {userId});";
+        Write(query);
+        var id = GetId();
+        foreach (var item in cart)
+        {
+            string priceString = item.Product.DefaultPrice.ToString().Replace(',', '.');
+            string itemQuery = $"INSERT INTO OrderHistoryItemList VALUES ('{item.Product.Name}', {priceString}, {item.Quantity}, {id});";
+            Write(itemQuery);
+        }
+    }
+
+    private int GetId()
+    {
+        string queryString = "SELECT MAX(Id) AS id FROM OrderHistory;";
+        using (SqlConnection connection = new SqlConnection(
+                   ConnectionString))
+        {
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+
+
+            return (int)reader["Id"];
+        }
+    }
+
+    public List<Order> ReadOrderHistory(int userId)
+    {
+        string queryString = $"SELECT * FROM OrderHistory WHERE User_id = {userId};";
+        using (SqlConnection connection = new SqlConnection(
+                   ConnectionString))
+        {
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            Order order;
+            var orders = new List<Order>();
+            while (reader.Read())
+            {
+                order = new Order
+                {
+                    Id = (int)reader["Id"],
+                    OrderDate = (DateTime)reader["Order_date"],
+                    OrderStatus = (string)reader["Order_status"],
+                    TotalPrice = (decimal)reader["Total_price"],
+                    OrderItems = ReadOrderItems((int)reader["Id"])
+                };
+                orders.Add(order);
+
+            }
+
+
+            return orders;
+        }
+    }
+
+
+    public List<OrderItem> ReadOrderItems(int id)
+    {
+        string queryString = $"SELECT * FROM OrderHistoryItemList WHERE Order_history_id = {id};";
+        using (SqlConnection connection = new SqlConnection(
+                   ConnectionString))
+        {
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            OrderItem orderItem;
+            var items = new List<OrderItem>();
+            while (reader.Read())
+            {
+                orderItem = new OrderItem
+                {
+                    ItemName = (string)reader["Item_name"],
+                    ItemPrice = (decimal)reader["Item_price"],
+                    Quantity = (int)reader["Quantity"],
+                    OrderHistoryId = (int)reader["Order_history_id"]
+                };
+                items.Add(orderItem);
+            }
+
+            return items;
+        }
     }
 }

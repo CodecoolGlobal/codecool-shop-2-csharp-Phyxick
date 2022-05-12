@@ -24,5 +24,15 @@ namespace Codecool.CodecoolShop.Services
         {
            return _cartDao.GetSavedCart(userId);
         }
+
+        public void SaveOrder(List<Item> cart, int userId)
+        {
+            _cartDao.SaveOrder(cart, userId);
+        }
+
+        public List<Order> GetOrders(int userId)
+        {
+            return _cartDao.ReadOrderHistory(userId);
+        }
     }
 }
