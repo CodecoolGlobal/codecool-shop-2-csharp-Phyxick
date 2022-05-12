@@ -43,6 +43,7 @@ namespace Codecool.CodecoolShop.Helpers
                     _productDao = ProductDaoMemory.GetInstance();
                     _productCategoryDao = ProductCategoryDaoMemory.GetInstance();
                     _supplierDao = SupplierDaoMemory.GetInstance();
+                    _userDao = UserDaoMemory.GetInstance();
                     Startup.SetupInMemoryDatabases();
                     break;
                 default:
