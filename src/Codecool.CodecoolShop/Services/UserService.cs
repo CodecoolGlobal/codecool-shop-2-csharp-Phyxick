@@ -22,11 +22,9 @@ namespace Codecool.CodecoolShop.Services
         {
             _userDao.Remove(user);
         }
-
         public bool Register(User user)
         {
            return _userDao.Register(user);
-
         }
     }
 }
