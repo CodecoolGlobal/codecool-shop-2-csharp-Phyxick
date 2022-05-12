@@ -108,5 +108,10 @@ namespace Codecool.CodecoolShop.Controllers
             ViewData["user"] = UserService.GetUserData(username);
             return RedirectToAction("Details");
         }
+
+        public IActionResult Orderhistory()
+        {
+            return View();
+        }
     }
 }
