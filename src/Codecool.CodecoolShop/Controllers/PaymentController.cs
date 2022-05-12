@@ -82,17 +82,19 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult ValidatePayment()
         {
-            string username = HttpContext.Session.GetString("username")?.Replace("\"", "");
             bool ValidCardDate = true;
             if (ValidCardDate)
             {
+                string username = HttpContext.Session.GetString("username")?.Replace("\"", "");
                 var user = UserService.GetUserData(username);
                 user.CardHolderName = Request.Form["Card Holder Name"];
                 user.CardNumber = Request.Form["Card Number"];
                 user.ExpiryDate = Request.Form["Expiry Date"];
                 user.CVVCode = Request.Form["CVV"];
+                string name = Request.Form["Name"];
+                string email = Request.Form["Email"];
                 UserService.UpdateUserData(user);
-                emailSender.SendConfirmationEmail(user.Name, user.Email);
+                emailSender.SendConfirmationEmail(name, email, "order");
                 return RedirectToAction("Confirmation");
             }
             return RedirectToAction("Index");
