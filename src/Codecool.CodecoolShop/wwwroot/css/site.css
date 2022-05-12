@@ -248,3 +248,17 @@ a {
     color: red; 
 }
 
+.login-button {
+    margin-top: 10px;
+    width: 50%;
+    height: 40px;
+    border: none;
+    background-color: #8f613e;
+    border: 1px solid #aa7552;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    color: rgb(252, 237, 219);
+}
