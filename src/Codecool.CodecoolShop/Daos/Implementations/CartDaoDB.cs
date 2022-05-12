@@ -54,7 +54,6 @@ public class CartDaoDB : DbConnectionHelper<User>, ICartDao
                 };
                 cart.Add(item);
             }
-            // ShoppingCart.Product_id, ShoppingCart.User_id, Product.Name, Product.Default_price, Product.Image, Product.Description, Product.Product_category_id, Product.Supplier_id, Count(Product.Id) as Quantity
 
             return cart;
         }
