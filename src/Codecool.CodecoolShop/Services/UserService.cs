@@ -29,6 +29,8 @@ namespace Codecool.CodecoolShop.Services
 
         public User GetUserData(string username)
         {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentException("Invalid Username!");
             return _userDao.GetUserData(username);
         }
 

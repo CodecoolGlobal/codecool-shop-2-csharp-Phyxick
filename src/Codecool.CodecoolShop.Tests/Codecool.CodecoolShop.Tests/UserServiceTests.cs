@@ -8,6 +8,7 @@ using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
 using NSubstitute;
 using NSubstitute.ClearExtensions;
+using NSubstitute.ReturnsExtensions;
 using NUnit.Framework;
 
 namespace Codecool.CodecoolShop.Tests
@@ -47,6 +48,28 @@ namespace Codecool.CodecoolShop.Tests
             var user = new User { Username = "WorkPlease", Password = "PleaseWork" };
             _userDao.Register(user).Returns(true);
             Assert.IsTrue(_userService.Register(user));
+        }
+
+        [Test]
+        public void GetUserDataValidValue()
+        {
+            var user = new User { Username = "WorkPlease", Password = "PleaseWork" };
+            _userDao.GetUserData("WorkPlease").Returns(user);
+            Assert.AreEqual(user, _userService.GetUserData("WorkPlease"));
+        }
+
+        [Test]
+        public void GetUserDataInvalidValue()
+        {
+            Assert.Throws<ArgumentException>(() => _userService.GetUserData(""));
+        }
+
+        [Test]
+        public void UpdateUserDataValidValue()
+        {
+            var user = new User { Username = "WorkPlease", Password = "PleaseWork" };
+            _userDao.UpdateUserData(user);
+            _userDao.Received().UpdateUserData(user);
         }
     }
 }
