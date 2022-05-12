@@ -45,7 +45,11 @@ namespace Codecool.CodecoolShop.Controllers
                     User userData = UserService.GetUserData(user.Username);
                     cart = CartService.GetSavedCart(userData.Id);
                     if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") != null)
-                        cart.AddRange(SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart"));
+                    {
+                        var newCart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+                        ServiceHelper.MergeCarts(cart, newCart);
+                    }
+
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "username", username);
                 }
@@ -56,7 +60,7 @@ namespace Codecool.CodecoolShop.Controllers
             HttpContext.Session.SetString("message", message);
             return RedirectToAction("Index");
         }
-
+        
         public IActionResult Register()
         {
             string username = Request.Form["register-username"];
