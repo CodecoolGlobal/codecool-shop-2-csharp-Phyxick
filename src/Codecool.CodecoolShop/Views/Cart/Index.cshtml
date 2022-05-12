@@ -1,5 +1,8 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@{
     Layout = null;
+    string message = Context.Session.GetString("message");
+    Context.Session.Remove("message");
 }
 
 <!DOCTYPE html>
@@ -63,6 +66,12 @@
            </div>
            <a asp-controller="Cart" asp-action="Checkout"><button class="button">Checkout</button></a>
            <a asp-controller="Product" asp-action="Index"><button id="continue-shopping" class="button">Continue Shopping</button></a>
+           <a asp-controller="Cart" asp-action="SaveCart"><button id="save-cart" class="button"> Click Here! To Save your shopping list !</button></a>
+           @if ( message != null)
+           {
+               Console.WriteLine("ok");
+               <h1>@message</h1>
+           }
        </div>
        
    </div>
