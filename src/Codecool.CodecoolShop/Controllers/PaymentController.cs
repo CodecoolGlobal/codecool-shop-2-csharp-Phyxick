@@ -27,10 +27,7 @@ namespace Codecool.CodecoolShop.Controllers
         public PaymentController(ILogger<PaymentController> logger)
         {
             _logger = logger;
-            ProductService = new ProductService(
-                ProductDaoDB.GetInstance(),
-                ProductCategoryDaoDB.GetInstance(),
-                SupplierDaoDB.GetInstance());
+            ProductService = ServiceHelper.GetProductService();
             UserService = new UserService(UserDaoDB.GetInstance());
         }
 
