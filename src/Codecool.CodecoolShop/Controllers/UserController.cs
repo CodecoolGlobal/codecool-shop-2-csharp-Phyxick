@@ -23,9 +23,8 @@ namespace Codecool.CodecoolShop.Controllers
             UserService = ServiceHelper.GetUserService();
         }
 
-        public IActionResult Index(string? message)
+        public IActionResult Index()
         {
-            ViewData["message"] = message;
             return View();
         }
 
@@ -45,7 +44,8 @@ namespace Codecool.CodecoolShop.Controllers
             }
 
             var message = "Please enter the correct credentials!";
-            return RedirectToAction("Index", "User", new { message = message });
+            HttpContext.Session.SetString("message", message);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Register()
@@ -60,7 +60,8 @@ namespace Codecool.CodecoolShop.Controllers
                 return RedirectToAction("Index", "Product");
             }
             var message = "User already exists!";
-            return (RedirectToAction("Index", "User", new { message = message }));
+            HttpContext.Session.SetString("message", message);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Logout()
