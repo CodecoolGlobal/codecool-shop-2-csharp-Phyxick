@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Helpers;
@@ -15,12 +16,15 @@ namespace Codecool.CodecoolShop.Controllers
         private readonly ILogger<UserController> _logger;
         public UserService UserService { get; set; }
 
+        public CartService CartService { get; set; }
+
         EmailSender emailSender = new EmailSender();
 
         public UserController(ILogger<UserController> logger)
         {
             _logger = logger;
             UserService = ServiceHelper.GetUserService();
+            CartService = ServiceHelper.GetCartService();
         }
 
         public IActionResult Index(string? message)
@@ -39,6 +43,11 @@ namespace Codecool.CodecoolShop.Controllers
                 if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "username") == null)
                 {
                     List<Item> cart = new List<Item>();
+                    User userData = UserService.GetUserData(user.Username);
+                    cart = CartService.GetSavedCart(userData.Id);
+                    if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") != null)
+                        cart.AddRange(SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart"));
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "username", username);
                 }
                 return RedirectToAction("Index", "Product");
@@ -66,6 +75,7 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("username");
+            HttpContext.Session.Remove("cart");
             return RedirectToAction("Index", "Product");
         }
 

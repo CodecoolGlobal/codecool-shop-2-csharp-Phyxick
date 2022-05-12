@@ -13,6 +13,7 @@ namespace Codecool.CodecoolShop.Helpers
         private IProductCategoryDao _productCategoryDao;
         private ISupplierDao _supplierDao;
         private IUserDao _userDao;
+        private ICartDao _cartDao;
         private static ServiceHelper _instance;
 
         private static ServiceHelper GetInstance()
@@ -38,6 +39,7 @@ namespace Codecool.CodecoolShop.Helpers
                     _productCategoryDao = ProductCategoryDaoDB.GetInstance(connectionString);
                     _supplierDao = SupplierDaoDB.GetInstance(connectionString);
                     _userDao = UserDaoDB.GetInstance(connectionString);
+                    _cartDao = CartDaoDB.GetInstance(connectionString);
                     break;
                 case "memory":
                     _productDao = ProductDaoMemory.GetInstance();
@@ -65,6 +67,14 @@ namespace Codecool.CodecoolShop.Helpers
             serviceHelper.SetDaos();
 
             return new UserService(serviceHelper._userDao);
+        }
+
+        public static CartService GetCartService()
+        {
+            ServiceHelper serviceHelper = GetInstance();
+            serviceHelper.SetDaos();
+
+            return new CartService(serviceHelper._cartDao);
         }
     }
 }
