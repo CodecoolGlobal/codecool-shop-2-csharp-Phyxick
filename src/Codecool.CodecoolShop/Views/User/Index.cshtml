@@ -1,8 +1,8 @@
-﻿@using Microsoft.AspNetCore.Routing
-@using RouteData = Microsoft.AspNetCore.Components.RouteData
+﻿@using Microsoft.AspNetCore.Http
 @{
     Layout = null;
-    string message = ViewData["message"] as string;
+    string message = Context.Session.GetString("message");
+    Context.Session.Remove("message");
 }
 <!DOCTYPE html>
 <html>
@@ -27,7 +27,7 @@
                     <label for="login-password">Password</label>
                     <input type="password" name="login-password" id="login-password" class="form" size="20">
                     <br/><br/>
-                    <button type="submit" id="login-button">Login</button>
+                    <button type="submit" class="login-button">Login</button>
                 </fieldset>
             </form>
         <div style="text-align: center"><p style="display: inline-block">Not registered yet? Click <strong><a id="register">here</a></strong> to register now!</p></div>
@@ -42,7 +42,7 @@
                     <label for="register-email">Email</label>
                     <input type="email" name="register-email" id="register-email" class="form" size="20">
                     <br/><br/>
-                    <button type="submit" id="register-button">Register</button>
+                    <button type="submit" class="login-button">Register</button>
                 </fieldset>
             </form>
             <div style="text-align: center"><p style="display: inline-block">Already have any account? Click <strong><a id="login">here</a></strong> to log in now!</p></div>
