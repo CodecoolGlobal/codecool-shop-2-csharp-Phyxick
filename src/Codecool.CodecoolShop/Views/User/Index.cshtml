@@ -19,7 +19,7 @@
 </head>
 <body>
 <div id="login-form">
-    <form method="post" action="@Url.Action("ValidateLogin", "Login")">
+    <form method="post" action="@Url.Action("ValidateLogin", "User")">
         <label for="login-username">Username</label>
         <input type="text" name="username" class="form" size="10">
         <label for="login-password">Password</label>
@@ -29,7 +29,7 @@
     <p>Not registered yet? Click <a id="register">here</a> to register now!</p>
 </div>
 <div id="register-form" hidden="hidden">
-    <form method="post" action="@Url.Action("Register", "Login")">
+    <form method="post" action="@Url.Action("Register", "User")">
         <label for="login-username">Username</label>
         <input type="text" name="username" class="form" size="10">
         <label for="login-password">Password</label>
