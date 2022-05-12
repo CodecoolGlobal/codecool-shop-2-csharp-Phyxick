@@ -7,12 +7,7 @@ namespace Codecool.CodecoolShop.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Username { get; set; }
-
-        public string Password
-        {
-            get;
-            set;
-        }
+        public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public string BillingCountry { get; set; }
@@ -25,5 +20,9 @@ namespace Codecool.CodecoolShop.Models
         public string ShippingCity { get; set; }
         public string ShippingStreet { get; set; }
         public string ShippingHouseNumber { get; set; }
+        public string CardHolderName { get; set; }
+        public string CardNumber { get; set; }
+        public string ExpiryDate { get; set; }
+        public string CVVCode { get; set; }
     }
 }

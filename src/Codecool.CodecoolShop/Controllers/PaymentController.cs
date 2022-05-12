@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
+using Microsoft.AspNetCore.Http;
 using Serilog;
 
 
@@ -21,36 +22,50 @@ namespace Codecool.CodecoolShop.Controllers
 
         private readonly ILogger<PaymentController> _logger;
         public ProductService ProductService { get; set; }
+        public UserService UserService { get; set; }
 
         public PaymentController(ILogger<PaymentController> logger)
         {
             _logger = logger;
             ProductService = ServiceHelper.GetProductService();
+            UserService = ServiceHelper.GetUserService();
         }
 
         public IActionResult ValidateData()
         {
+            string username = HttpContext.Session.GetString("username")?.Replace("\"", "");
             bool ValidDate = true;
             if (ValidDate)
             {
-                string name = Request.Form["Name"];
-                string email = Request.Form["Email"];
-                string phoneNum = Request.Form["Phone number"];
-                string country = Request.Form["Country"];
-                string zip = Request.Form["Zipcode"];
-                string city = Request.Form["City"];
-                string street = Request.Form["Street"];
-                string house = Request.Form["House"];
-                Log.Logger.Information($"Name: {name}");
-                Log.Logger.Information($"Email: {email}");
-                Log.Logger.Information($"Phone: {phoneNum}");
-                Log.Logger.Information($"Country: {country}");
-                Log.Logger.Information($"Zip: {zip}");
-                Log.Logger.Information($"City: {city}");
-                Log.Logger.Information($"Street: {street}");
-                Log.Logger.Information($"House: {house}");
-                return RedirectToAction("Index", new {name = name,  email = email});
-
+                var user = UserService.GetUserData(username);
+                user.Name = Request.Form["Name"];
+                user.Email = Request.Form["Email"];
+                user.Phone = Request.Form["Phone number"];
+                user.BillingCountry = Request.Form["Billing Country"];
+                user.BillingZipcode = Request.Form["Billing Zipcode"];
+                user.BillingCity = Request.Form["Billing City"];
+                user.BillingStreet = Request.Form["Billing Street"];
+                user.BillingHouseNumber = Request.Form["Billing House"];
+                user.ShippingCountry = Request.Form["Shipping Country"];
+                user.ShippingZipcode = Request.Form["Shipping Zipcode"];
+                user.ShippingCity = Request.Form["Shipping City"];
+                user.ShippingStreet = Request.Form["Shipping Street"];
+                user.ShippingHouseNumber = Request.Form["Shipping House"];
+                UserService.UpdateUserData(user);
+                Log.Logger.Information($"Name: {user.Name}");
+                Log.Logger.Information($"Email: {user.Email}");
+                Log.Logger.Information($"Phone: {user.Phone}");
+                Log.Logger.Information($"Country: {user.BillingCountry}");
+                Log.Logger.Information($"Zip: {user.BillingZipcode}");
+                Log.Logger.Information($"City: {user.BillingCity}");
+                Log.Logger.Information($"Street: {user.ShippingStreet}");
+                Log.Logger.Information($"House: {user.BillingHouseNumber}");
+                Log.Logger.Information($"Country: {user.ShippingCountry}");
+                Log.Logger.Information($"Zip: {user.ShippingZipcode}");
+                Log.Logger.Information($"City: {user.ShippingCity}");
+                Log.Logger.Information($"Street: {user.ShippingStreet}");
+                Log.Logger.Information($"House: {user.ShippingHouseNumber}");
+                return RedirectToAction("Index", new {name = user.Name,  email = user.Email});
             }
             else
             {
@@ -67,12 +82,17 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult ValidatePayment()
         {
+            string username = HttpContext.Session.GetString("username")?.Replace("\"", "");
             bool ValidCardDate = true;
             if (ValidCardDate)
             {
-                string name = Request.Form["Name"];
-                string email = Request.Form["Email"];
-                emailSender.SendConfirmationEmail(name, email);
+                var user = UserService.GetUserData(username);
+                user.CardHolderName = Request.Form["Card Holder Name"];
+                user.CardNumber = Request.Form["Card Number"];
+                user.ExpiryDate = Request.Form["Expiry Date"];
+                user.CVVCode = Request.Form["CVV"];
+                UserService.UpdateUserData(user);
+                emailSender.SendConfirmationEmail(user.Name, user.Email);
                 return RedirectToAction("Confirmation");
             }
             return RedirectToAction("Index");

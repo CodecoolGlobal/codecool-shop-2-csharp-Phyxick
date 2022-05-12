@@ -51,7 +51,11 @@ CREATE TABLE Users
 	Shipping_zipcode TEXT,
 	Shipping_city TEXT,
 	Shipping_street TEXT,
-	Shipping_house_number TEXT
+	Shipping_house_number TEXT,
+	Card_holder_name TEXT,
+	Card_number TEXT,
+	Expiry_date TEXT,
+	CVV_code TEXT
 );
 
 CREATE TABLE ShoppingCart
@@ -240,8 +244,8 @@ INSERT INTO Product VALUES ('Trident', 559.49, 'trident.jpg', 'A simple trident 
 INSERT INTO Product VALUES ('Trident of Poseidon', 9999.00, 'trident2.jpg', 'The Trident of Poseidon, the god of the seas, himself', 15, 2);
 INSERT INTO Product VALUES ('Trident', 649.99, 'trident3.jpg', 'A fine piece of trident for the collectors', 15, 4);
 
-INSERT INTO Users VALUES ('admin', 'admin', '', '', '', '', '', '', '', '', '', '', '', '', '');
-INSERT INTO Users VALUES ('user1', '1234', '', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO Users VALUES ('admin', 'admin', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO Users VALUES ('user1', '1234', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
 SELECT * FROM Supplier;
 SELECT * FROM Product;

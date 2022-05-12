@@ -26,5 +26,15 @@ namespace Codecool.CodecoolShop.Services
         {
            return _userDao.Register(user);
         }
+
+        public User GetUserData(string username)
+        {
+            return _userDao.GetUserData(username);
+        }
+
+        public void UpdateUserData(User user)
+        {
+            _userDao.UpdateUserData(user);
+        }
     }
 }
