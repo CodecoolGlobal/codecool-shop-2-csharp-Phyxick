@@ -20,7 +20,7 @@ namespace Codecool.CodecoolShop.Controllers
         public UserController(ILogger<UserController> logger)
         {
             _logger = logger;
-            UserService = new UserService(UserDaoDB.GetInstance());
+            UserService = ServiceHelper.GetUserService();
         }
 
         public IActionResult Index(string? message)

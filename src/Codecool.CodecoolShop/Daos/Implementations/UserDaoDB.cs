@@ -10,15 +10,16 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     {
         private static UserDaoDB _instance = null;
 
-        private UserDaoDB()
+        private UserDaoDB(string connectionString)
         {
+            ConnectionString = connectionString;
         }
 
-        public static UserDaoDB GetInstance()
+        public static UserDaoDB GetInstance(string connectionString)
         {
             if (_instance == null)
             {
-                _instance = new UserDaoDB();
+                _instance = new UserDaoDB(connectionString);
             }
 
             return _instance;

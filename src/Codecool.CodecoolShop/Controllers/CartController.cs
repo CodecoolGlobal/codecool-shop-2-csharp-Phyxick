@@ -27,7 +27,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             _logger = logger;
             ProductService = ServiceHelper.GetProductService();
-            UserService = new UserService(UserDaoDB.GetInstance());
+            UserService = ServiceHelper.GetUserService();
         }
 
         [Route("cart")]

@@ -12,6 +12,7 @@ namespace Codecool.CodecoolShop.Helpers
         private IProductDao _productDao;
         private IProductCategoryDao _productCategoryDao;
         private ISupplierDao _supplierDao;
+        private IUserDao _userDao;
         private static ServiceHelper _instance;
 
         private static ServiceHelper GetInstance()
@@ -36,6 +37,7 @@ namespace Codecool.CodecoolShop.Helpers
                     _productDao = ProductDaoDB.GetInstance(connectionString);
                     _productCategoryDao = ProductCategoryDaoDB.GetInstance(connectionString);
                     _supplierDao = SupplierDaoDB.GetInstance(connectionString);
+                    _userDao = UserDaoDB.GetInstance(connectionString);
                     break;
                 case "memory":
                     _productDao = ProductDaoMemory.GetInstance();
@@ -55,6 +57,14 @@ namespace Codecool.CodecoolShop.Helpers
 
             return new ProductService(serviceHelper._productDao, serviceHelper._productCategoryDao,
                 serviceHelper._supplierDao);
+        }
+
+        public static UserService GetUserService()
+        {
+            ServiceHelper serviceHelper = GetInstance();
+            serviceHelper.SetDaos();
+
+            return new UserService(serviceHelper._userDao);
         }
     }
 }
