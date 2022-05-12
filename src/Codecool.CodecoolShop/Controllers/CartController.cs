@@ -15,7 +15,7 @@ using Serilog.Events;
 
 namespace Codecool.CodecoolShop.Controllers
 {
-    [Route("cart")]
+
     public class CartController : Controller
     {
         private readonly ILogger<CartController> _logger;
@@ -23,14 +23,16 @@ namespace Codecool.CodecoolShop.Controllers
 
         public UserService UserService { get; set; }
 
+        public CartService CartService { get; set; }
+
         public CartController(ILogger<CartController> logger)
         {
             _logger = logger;
             ProductService = ServiceHelper.GetProductService();
             UserService = ServiceHelper.GetUserService();
+            CartService = ServiceHelper.GetCartService();
         }
 
-        [Route("cart")]
         public IActionResult Index()
         {
             if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
@@ -49,7 +51,6 @@ namespace Codecool.CodecoolShop.Controllers
             return View();
         }
 
-        [Route("buy/{id}")]
         public IActionResult Buy(string id)
         {
             if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
@@ -76,7 +77,6 @@ namespace Codecool.CodecoolShop.Controllers
         }
 
 
-        [Route("add/{id}")]
         public IActionResult Add(string id)
         {
 
@@ -96,7 +96,6 @@ namespace Codecool.CodecoolShop.Controllers
         }
 
 
-        [Route("remove/{id}")]
         public IActionResult Remove(string id)
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
@@ -143,5 +142,26 @@ namespace Codecool.CodecoolShop.Controllers
             return View();
         }
 
+
+
+        public IActionResult SaveCart()
+        {
+            string message = "";
+            string username = HttpContext.Session.GetString("username")?.Replace("\"", "");
+            User user = UserService.GetUserData(username);
+            List<Item> carts = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            if (CartService.SaveCart(user.Id, carts))
+            {
+                message = "Your Cart is Saved";
+                HttpContext.Session.SetString("message", message);
+            }
+            else
+            {
+                message = "You must register and log in to save your cart";
+                HttpContext.Session.SetString("message", message);
+
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

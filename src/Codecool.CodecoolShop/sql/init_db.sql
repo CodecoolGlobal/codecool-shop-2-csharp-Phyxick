@@ -11,10 +11,10 @@ DROP TABLE IF EXISTS CartHistory;
 CREATE TABLE Product
 (
 	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	Name TEXT,
+	Name VARCHAR(255),
 	Default_price DECIMAL(20,2),
-	Image TEXT,
-	Description TEXT,
+	Image VARCHAR(255),
+	Description VARCHAR(255),
 	Product_category_id INT,
 	Supplier_id INT
 );
@@ -62,7 +62,7 @@ CREATE TABLE ShoppingCart
 (
 	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	Product_id INT,
-	User_id INT
+	User_id INT,
 );
 
 CREATE TABLE OrderHistory

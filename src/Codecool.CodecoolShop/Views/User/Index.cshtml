@@ -1,4 +1,7 @@
-﻿@using Microsoft.AspNetCore.Http
+﻿
+@using Microsoft.AspNetCore.Routing
+@using RouteData = Microsoft.AspNetCore.Components.RouteData
+@using Microsoft.AspNetCore.Http
 @{
     Layout = null;
     string message = Context.Session.GetString("message");
