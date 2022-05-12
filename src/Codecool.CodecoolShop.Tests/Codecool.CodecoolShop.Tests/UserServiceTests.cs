@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
 using NSubstitute;
-using NSubstitute.ClearExtensions;
-using NSubstitute.ReturnsExtensions;
 using NUnit.Framework;
 
 namespace Codecool.CodecoolShop.Tests

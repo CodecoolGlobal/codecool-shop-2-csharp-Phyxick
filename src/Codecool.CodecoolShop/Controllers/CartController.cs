@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Codecool.CodecoolShop.Controllers;
-using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
@@ -128,16 +125,19 @@ namespace Codecool.CodecoolShop.Controllers
         }
         public IActionResult Checkout()
         {
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             string username = HttpContext.Session.GetString("username")?.Replace("\"", "");
             ViewData["user"] = UserService.GetUserData(username);
-            var Id = Guid.NewGuid();
+            User user = UserService.GetUserData(username);
+            CartService.SaveOrder(cart, user.Id);
+            var id = CartService.GetOrders(user.Id).Select(i => i.Id).Max();
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .MinimumLevel.Override("System", LogEventLevel.Warning)
-                .WriteTo.File($"Logs\\log-{Id}-.json", LogEventLevel.Information, rollingInterval: RollingInterval.Day)
+                .WriteTo.File($"Logs\\log-{id}-.json", LogEventLevel.Information, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
-            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            
             Log.Information("Going to checkout With {@Cart}", cart);
             return View();
         }
@@ -149,6 +149,7 @@ namespace Codecool.CodecoolShop.Controllers
             string message = "";
             string username = HttpContext.Session.GetString("username")?.Replace("\"", "");
             User user = UserService.GetUserData(username);
+            
             List<Item> carts = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             if (CartService.SaveCart(user.Id, carts))
             {

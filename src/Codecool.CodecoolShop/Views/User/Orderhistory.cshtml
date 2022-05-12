@@ -1,0 +1,56 @@
+﻿@model dynamic
+
+@{
+    Layout = null;
+    var orders = ViewData["orders"] as List<Order>;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Order history</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/FormCSS.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
+</head>
+<body>
+<div style="text-align: center"><h1 style="display: inline-block" >Order History</h1></div>
+<div>
+    @foreach (var order in orders)
+    {
+        <fieldset class="form-style-1">
+            <div class="Cart-Items pad">
+                <div class="about">
+                    <h4 class="title">Order date: @order.OrderDate</h4>
+                </div>
+                <div class="about">
+                    <h4 class="title">Order status: @order.OrderStatus</h4>
+                </div>
+                <div class="about">
+                    <h4 class="title">Total price: ₯ @order.TotalPrice.ToString()</h4>
+                </div>
+                <div class="prices">
+                    @foreach (var item in order.OrderItems)
+                    {
+                        <div class="prices">
+                            <div class="amount">Item name: @item.ItemName</div>
+                        </div>
+                        <div class="prices">
+                            <div class="amount">Item price: ₯ @item.ItemPrice.ToString()</div>
+                        </div>
+                        <br/>
+                    }
+
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>
+<div style="text-align: center"><a style="display: inline-block" asp-action="Index" asp-controller="Product">Go back to main page</a></div>
+</body>
+</html>

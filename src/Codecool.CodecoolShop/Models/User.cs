@@ -1,6 +1,4 @@
-﻿using Codecool.CodecoolShop.Models;
-
-namespace Codecool.CodecoolShop.Models
+﻿namespace Codecool.CodecoolShop.Models
 {
     public class User
     {
