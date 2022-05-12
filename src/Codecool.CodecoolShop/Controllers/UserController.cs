@@ -27,16 +27,15 @@ namespace Codecool.CodecoolShop.Controllers
             CartService = ServiceHelper.GetCartService();
         }
 
-        public IActionResult Index(string? message)
+        public IActionResult Index()
         {
-            ViewData["message"] = message;
             return View();
         }
 
         public IActionResult ValidateLogin()
         {
-            string username = Request.Form["Username"];
-            string password = Request.Form["Password"];
+            string username = Request.Form["login-username"];
+            string password = Request.Form["login-password"];
             User user = new User() { Username = username, Password = password };
             if (UserService.ValidateLogin(user))
             {
@@ -54,22 +53,24 @@ namespace Codecool.CodecoolShop.Controllers
             }
 
             var message = "Please enter the correct credentials!";
-            return RedirectToAction("Index", "User", new { message = message });
+            HttpContext.Session.SetString("message", message);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Register()
         {
-            string username = Request.Form["Username"];
-            string password = Request.Form["Password"];
-            string email = Request.Form["Email"];
+            string username = Request.Form["register-username"];
+            string password = Request.Form["register-password"];
+            string email = Request.Form["register-email"];
             User user = new User() { Username = username, Password = password, Email = email, Name = "", Phone = "", BillingCountry = "", BillingCity = "", BillingZipcode = "", BillingStreet = "", BillingHouseNumber = "", ShippingCountry = "", ShippingCity = "", ShippingZipcode = "", ShippingStreet = "", ShippingHouseNumber = "", CardHolderName = "", CardNumber = "", ExpiryDate = "", CVVCode = "" };
             if (UserService.Register(user))
             {
-                emailSender.SendConfirmationEmail(username, email);
+                emailSender.SendConfirmationEmail(username, email, "registration");
                 return RedirectToAction("Index", "Product");
             }
             var message = "User already exists!";
-            return (RedirectToAction("Index", "User", new { message = message }));
+            HttpContext.Session.SetString("message", message);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Logout()

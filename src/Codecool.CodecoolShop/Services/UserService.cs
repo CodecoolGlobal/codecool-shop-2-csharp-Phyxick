@@ -22,7 +22,6 @@ namespace Codecool.CodecoolShop.Services
         {
             _userDao.Remove(user);
         }
-
         public bool Register(User user)
         {
            return _userDao.Register(user);
@@ -30,6 +29,8 @@ namespace Codecool.CodecoolShop.Services
 
         public User GetUserData(string username)
         {
+            if (string.IsNullOrEmpty(username))
+                throw new ArgumentException("Invalid Username!");
             return _userDao.GetUserData(username);
         }
 
