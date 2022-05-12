@@ -183,12 +183,14 @@ a {
 
     .dropdown .dropdown-label {
         display: block;
-        height: 30px;
+        min-height: 30px;
         padding: 6px 12px;
         line-height: 1;
         cursor: pointer;
         border: 1px solid #8f613e;
         border-radius: 25px;
+        height: fit-content;
+
     }
 
         .dropdown .dropdown-label:before {
