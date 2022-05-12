@@ -22,11 +22,13 @@ namespace Codecool.CodecoolShop.Services
 
         public ProductCategory GetProductCategory(int categoryId)
         {
-            return this.productCategoryDao.Get(categoryId);
+            var category = this.productCategoryDao.Get(categoryId);
+            return category ?? throw new ArgumentException("Invalid Id!");
         }
         public Supplier GetSupplier(int supplierId)
         {
-            return this.supplierDao.Get(supplierId);
+            var supplier = this.supplierDao.Get(supplierId);
+            return supplier ?? throw new ArgumentException("Invalid Id!");
         }
 
         public IEnumerable<ProductCategory> GetAllProductCategories()
@@ -37,21 +39,28 @@ namespace Codecool.CodecoolShop.Services
         public IEnumerable<Product> GetProductsForCategory(int categoryId)
         {
             ProductCategory category = this.productCategoryDao.Get(categoryId);
+            if (category == null)
+                throw new ArgumentException("Invalid Id!");
             return this.productDao.GetBy(category);
         }
         public Product GetProductById(int Id)
         {
-            return this.productDao.Get(Id);
+            var product = this.productDao.Get(Id);
+            return product ?? throw new ArgumentException("Invalid Id!");
         }
         public IEnumerable<Product> GetProductsForSupplier(int supplierId)
         {
             Supplier supplier = this.supplierDao.Get(supplierId);
+            if (supplier == null)
+                throw new ArgumentException("Invalid Id!");
             return this.productDao.GetBy(supplier);
         }
         public IEnumerable<Product> GetProductsForCategoryAndSupplier(int categoryId, int supplierId)
         {
             ProductCategory category = this.productCategoryDao.Get(categoryId);
             Supplier supplier = this.supplierDao.Get(supplierId);
+            if (supplier == null || category == null)
+                throw new ArgumentException("Invalid Id!");
             return this.productDao.GetBy(category, supplier);
         }
 
