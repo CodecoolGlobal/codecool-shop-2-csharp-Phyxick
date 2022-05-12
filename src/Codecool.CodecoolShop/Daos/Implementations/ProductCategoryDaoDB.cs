@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {

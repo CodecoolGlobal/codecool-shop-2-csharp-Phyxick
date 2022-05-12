@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS ShippingAddress;
 DROP TABLE IF EXISTS ShoppingCart;
 DROP TABLE IF EXISTS OrderHistory;
 DROP TABLE IF EXISTS CartHistory;
+DROP TABLE IF EXISTS OrderHistoryItemList
 
 CREATE TABLE Product
 (
@@ -70,7 +71,7 @@ CREATE TABLE OrderHistory
 	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	Order_date DateTime,
 	Order_status TEXT,
-	Total_price Decimal(20,0),
+	Total_price Decimal(20,2),
 	User_id INT
 );
 
@@ -80,6 +81,16 @@ CREATE TABLE CartHistory
 	Product_id INT,
 	Order_history_id INT
 );
+
+
+CREATE TABLE OrderHistoryItemList
+(
+	Item_name TEXT,
+	Item_Price DECIMAL(20,2),
+	Quantity INT,
+	Order_history_id INT
+);
+
 
 ALTER TABLE OrderHistory
 	DROP CONSTRAINT IF EXISTS FK_OrderHistory_User_id;
@@ -101,6 +112,9 @@ ALTER TABLE ShoppingCart
 
 ALTER TABLE ShoppingCart
 	DROP CONSTRAINT IF EXISTS FK_ShoppingCart_Product_id;
+
+ALTER TABLE OrderHistoryItemList
+	DROP CONSTRAINT IF EXISTS FK_OrderHistoryItemList_Order_history_id;
 
 ALTER TABLE OrderHistory
 	ADD CONSTRAINT FK_OrderHistory_User_id FOREIGN KEY (User_id)
@@ -147,6 +161,13 @@ ALTER TABLE ShoppingCart
 ALTER TABLE ShoppingCart
 	ADD CONSTRAINT FK_ShoppingCart_Product_id FOREIGN KEY (Product_id)
 	REFERENCES Product (Id)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
+;
+
+ALTER TABLE OrderHistoryItemList
+	ADD CONSTRAINT FK_OrderHistoryItemList_Order_history_id FOREIGN KEY (Order_history_id)
+	REFERENCES OrderHistory (Id)
 	ON DELETE CASCADE
     ON UPDATE CASCADE
 ;
@@ -247,9 +268,11 @@ INSERT INTO Product VALUES ('Trident', 649.99, 'trident3.jpg', 'A fine piece of 
 INSERT INTO Users VALUES ('admin', 'admin', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 INSERT INTO Users VALUES ('user1', '1234', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
+
 SELECT * FROM Supplier;
 SELECT * FROM Product;
 SELECT * FROM ProductCategory;
 SELECT * FROM Users;
 SELECT * FROM ShoppingCart;
 SELECT * FROM OrderHistory;
+SELECT * FROM OrderHistoryItemList;
