@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Daos.Implementations;
+using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
 using Microsoft.Extensions.Configuration;
 
@@ -76,6 +78,28 @@ namespace Codecool.CodecoolShop.Helpers
             serviceHelper.SetDaos();
 
             return new CartService(serviceHelper._cartDao);
+        }
+
+        public static void MergeCarts(List<Item> cart, List<Item> newCart)
+        {
+            foreach (var item1 in newCart)
+            {
+                bool notFound = true;
+                foreach (var item2 in cart)
+                {
+                    if (item1.Product.Id.Equals(item2.Product.Id))
+                    {
+                        item2.Quantity += item1.Quantity;
+                        notFound = false;
+                        break;
+                    }
+                }
+
+                if (notFound)
+                {
+                    cart.Add(item1);
+                }
+            }
         }
     }
 }

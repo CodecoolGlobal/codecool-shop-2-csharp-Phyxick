@@ -53,7 +53,6 @@ public class CartDaoDB : DbConnectionHelper<User>, ICartDao
                 cart.Add(item);
             }
 
-
             return cart;
         }
     }

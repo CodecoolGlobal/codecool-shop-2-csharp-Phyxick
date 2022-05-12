@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Models;
 
@@ -14,7 +15,6 @@ namespace Codecool.CodecoolShop.Services
         }
         public bool SaveCart(int UserId, List<Item> carts)
         {
-
             if (_cartDao.SaveShoppingCart(UserId, carts))
                 return true;
             return false;
@@ -22,7 +22,9 @@ namespace Codecool.CodecoolShop.Services
 
         public List<Item> GetSavedCart(int userId)
         {
-           return _cartDao.GetSavedCart(userId);
+            if (userId <= 0)
+                throw new ArgumentOutOfRangeException("Invalid userId!");
+            return _cartDao.GetSavedCart(userId);
         }
 
         public void SaveOrder(List<Item> cart, int userId)
