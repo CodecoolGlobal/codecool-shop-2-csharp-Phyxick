@@ -27,7 +27,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Product" asp-action="Index">Argonauts</a>
+            <a class="navbar-brand" style="min-width: 100px" asp-area="" asp-controller="Product" asp-action="Index">Argonauts</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -71,14 +71,14 @@
                 @if (Context.Session.GetString("username") == null)
                 {
                     <a class="nav-link text-dark" id="login" asp-controller="User" asp-action="Index">Login/Reg</a>
+                    <a class="nav-link text-dark fa-solid fa-sailboat" style="min-width: 150px" asp-area="" asp-controller="Cart" asp-action="Index">καλάθι &#129530; (@cartItems)</a>
                 }
                 else
                 {
-                    <a class="nav-link text-dark" id="logout" asp-controller="User" asp-action="Logout">Logout</a>
                     <a class="nav-link text-dark" id="username" asp-controller="User" asp-action="Details">@Context.Session.GetString("username").Replace("\"", "")</a>
+                    <a class="nav-link text-dark fa-solid fa-sailboat" style="min-width: 150px" asp-area="" asp-controller="Cart" asp-action="Index">καλάθι &#129530; (@cartItems)</a>
+                    <a class="nav-link text-dark" id="logout" asp-controller="User" asp-action="Logout">&#10060;</a>
                 }
-                
-                <a class="nav-link text-dark fa-solid fa-sailboat" asp-area="" asp-controller="Cart" asp-action="Index">καλάθι &#129530; (@cartItems)</a>
                 <div id="google_translate_element"></div>
             </div>
         </div>

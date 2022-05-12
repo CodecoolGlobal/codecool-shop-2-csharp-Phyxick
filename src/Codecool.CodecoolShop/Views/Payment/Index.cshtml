@@ -17,36 +17,39 @@
     <script src="~/js/site.js" asp-append-version="true" defer></script>
 </head>
 <body>
+<div>
 <form method="post" action="@Url.Action("ValidatePayment", "Payment")">
     <fieldset class="form-style-1">
         <legend>Payment</legend>
         <div>
             <label for="Card Holder Name">Card Holder Name:</label>
-            <input type="text" name="Card Holder Name" value="@if (user != null) {@user.CardHolderName}" required="required"/>
+            <input type="text" name="Card Holder Name" id="Card Holder Name" value="@if (user != null) {@user.CardHolderName}" required="required"/>
         </div>
         <div>
             <label for="Card Number">Card Number:</label>
-            <input type="text" name="Card Number" value="@if (user != null) {@user.CardNumber}" required="required"/>
+            <input type="text" name="Card Number" id="Card Number" value="@if (user != null) {@user.CardNumber}" required="required"/>
         </div>
         <div>
             <label for="Expiry Date">Expiry Date:</label>
-            <input type="datetime" name="Expiry Date" value="@if (user != null) {@user.ExpiryDate}" />
+            <input type="datetime" name="Expiry Date" id="Expiry Date" value="@if (user != null) {@user.ExpiryDate}" />
         </div>
         <div>
             <label for="CVV">CVV Code:</label>
-            <input type="text" name="CVV" value="@if (user != null) {@user.CVVCode}" />
+            <input type="text" name="CVV" id="CVV" value="@if (user != null) {@user.CVVCode}" />
         </div>
-@*        <div hidden="true">
+        <div hidden="true">
             <label for="Email">Email:</label>
-            <input class="field-long" type="text" name="Email" value="@ViewData["email"]" />
+            <input class="field-long" type="text" id="Email" name="Email" value="@ViewData["email"]" />
         </div>
         <div hidden="true">
             <label for="Name">Name:</label>
-            <input type="text" name="Name" value="@ViewData["name"]" />
-        </div>*@
+            <input type="text" name="Name" id="Name" value="@ViewData["name"]" />
+        </div>
         <br>
         <input type="submit" value="Submit" class="submit" />
     </fieldset>
 </form>
+</div>
+<div style="text-align:center"><a style="display:inline-block" asp-action="Index" asp-controller="Product">Go back to main page</a></div>
 </body>
 </html>
