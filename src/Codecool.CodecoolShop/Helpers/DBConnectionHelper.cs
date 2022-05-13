@@ -28,10 +28,8 @@ namespace Codecool.CodecoolShop.Helpers
             }
         }
 
-        protected virtual List<T> Read(string queryString)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract List<T> Read(string queryString);
+
         
         protected string ConnectionString;
 

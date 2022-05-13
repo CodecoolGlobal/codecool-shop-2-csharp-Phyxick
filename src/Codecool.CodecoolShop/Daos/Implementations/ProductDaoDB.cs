@@ -66,7 +66,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return Read(query);
         }
 
-        protected override List<Product> Read(string queryString)
+        public override List<Product> Read(string queryString)
         {
             using (SqlConnection connection = new SqlConnection(
                        ConnectionString))

@@ -7,7 +7,7 @@ using Microsoft.Data.SqlClient;
 
 namespace Codecool.CodecoolShop.Daos;
 
-public class CartDaoDB : DbConnectionHelper<User>, ICartDao
+public class CartDaoDB : DbConnectionHelper<Item>, ICartDao
 {
     private static CartDaoDB _instance = null;
 
@@ -23,7 +23,7 @@ public class CartDaoDB : DbConnectionHelper<User>, ICartDao
     }
 
 
-    public List<Item> Read(string queryString)
+    public override List<Item> Read(string queryString)
     {
         using (SqlConnection connection = new SqlConnection(
                    ConnectionString))
@@ -105,14 +105,14 @@ public class CartDaoDB : DbConnectionHelper<User>, ICartDao
     public void SaveOrder(List<Item> cart, int userId)
     {
         decimal totalPrice = cart.Sum(i => i.Product.DefaultPrice);
-        var totalPriceString = totalPrice.ToString().Replace(',', '.');
-        var date = DateTime.Now.ToString().Replace(". ", "").Insert(8, " ");
+        var totalPriceString = totalPrice.ToString("F");
+        var date = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
         string query = $"INSERT INTO OrderHistory VALUES ('{date}', 'Checked', {totalPriceString}, {userId});";
         Write(query);
         var id = GetId();
         foreach (var item in cart)
         {
-            string priceString = item.Product.DefaultPrice.ToString().Replace(',', '.');
+            string priceString = item.Product.DefaultPrice.ToString("F");
             string itemQuery = $"INSERT INTO OrderHistoryItemList VALUES ('{item.Product.Name}', {priceString}, {item.Quantity}, {id});";
             Write(itemQuery);
         }

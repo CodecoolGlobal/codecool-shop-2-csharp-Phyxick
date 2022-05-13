@@ -1,4 +1,6 @@
-﻿using Codecool.CodecoolShop.Helpers;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Codecool.CodecoolShop.Helpers;
 using Codecool.CodecoolShop.Models;
 using Microsoft.Data.SqlClient;
 
@@ -22,7 +24,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
             return _instance;
         }
-        public new User Read(string queryString)
+        public override List<User> Read(string queryString)
         {
             using (SqlConnection connection = new SqlConnection(
                        ConnectionString))
@@ -30,10 +32,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 SqlCommand command = new SqlCommand(queryString, connection);
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                User user = new User();
-                while (reader.Read())
+                List<User> user = new List<User>();
+                var hasRecord = reader.Read();
+                if (hasRecord)
                 {
-                    user = new User
+                    user.Add(new User
                     {
                         Id = (int)reader["Id"],
                         Name = (string)reader["Name"],
@@ -51,9 +54,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                         ShippingZipcode = (string)reader["Shipping_zipcode"],
                         ShippingStreet = (string)reader["Shipping_street"],
                         ShippingHouseNumber = (string)reader["Shipping_house_number"]
-                    };
+                    });
                 }
-                
+                else
+                {
+                    user.Add(new User());
+                }
 
                 return user;
             }
@@ -62,7 +68,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public bool ValidateLogin(User user)
         {
             string query = $"SELECT * FROM Users WHERE Username = '{user.Username}' AND Password = '{user.Password}';";
-            return Read(query).Username == user.Username;
+            return Read(query).Single().Username == user.Username;
         }
 
         public void Remove(User user)
@@ -74,7 +80,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         private bool CheckRegistrationStatus(User user)
         {
             string query = $"SELECT * FROM Users WHERE Username = '{user.Username}';";
-            return Read(query).Username == null;
+            return Read(query).Single().Username == null;
         }
 
         public bool Register(User user)
@@ -100,7 +106,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public User GetUserData(string username)
         {
             string query = $"SELECT * FROM Users WHERE Username = '{username}';";
-            return Read(query);
+            return Read(query).Single();
         }
 
         public void UpdateUserData(User user)
